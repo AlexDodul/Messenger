@@ -1,4 +1,5 @@
 package com.github.payload;
 
-public class Topic {
+public enum Topic {
+    massages,auth;
 }

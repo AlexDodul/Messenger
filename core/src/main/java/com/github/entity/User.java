@@ -1,21 +1,26 @@
 package com.github.entity;
 
+import com.github.micro.orm.CustomRowMapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class User {
-    long id;
 
-    String firstName;
+    private long id;
 
-    String lastName;
+    private String firstName;
 
-    String email;
+    private String lastName;
 
-    String login;
+    private String email;
 
-    String password;
+    private String login;
 
-    String phone;
+    private String password;
+
+    private String phone;
 
     public User(long id, String firstName, String lastName, String email, String login, String password, String phone) {
         this.id = id;
@@ -108,4 +113,5 @@ public class User {
                 ", phone='" + phone + '\'' +
                 '}';
     }
+
 }

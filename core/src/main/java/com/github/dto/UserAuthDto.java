@@ -1,6 +1,7 @@
 package com.github.dto;
 
 public class UserAuthDto {
+
     private String login;
 
     private String password;
@@ -20,4 +21,5 @@ public class UserAuthDto {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

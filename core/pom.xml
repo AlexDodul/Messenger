@@ -14,17 +14,25 @@
     </properties>
 
     <dependencies>
+
+        <!-- Jackson -->
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.12.2</version>
         </dependency>
+
+        <!-- JUnit -->
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- Logger -->
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -42,6 +50,23 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.30</version>
+        </dependency>
+
+        <!-- Hikari -->
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>3.4.5</version>
+        </dependency>
+
+        <!-- micro-orm -->
+
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>micro-orm</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>

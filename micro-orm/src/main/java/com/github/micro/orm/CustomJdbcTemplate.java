@@ -1,9 +1,17 @@
 package com.github.micro.orm;
 
-import javax.sql.DataSource;
-import java.sql.*;
+import com.github.micro.orm.exceptions.ElementNotFoundException;
 
-public class CustomJdbcTemplate {
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class CustomJdbcTemplate <T>{
 
     private final DataSource dataSource;
 
@@ -11,57 +19,64 @@ public class CustomJdbcTemplate {
         this.dataSource = dataSource;
     }
 
-    public <T> T findBy(String query, CustomRowMapper<T> rowMapper, Object... params){
-        T result = null;
-        try(Connection connection = this.dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query)){
-            for(int i = 0; i < params.length; i++){
-                statement.setObject(i + 1, params[i]);
-            }
-        } catch (SQLException e){
-            System.out.printf("Message %s \n", e.getMessage());
-        }
-        return result;
-    }
-
-    public <T> void insert(String query, CustomRowMapper<T> rowMapper, Object... params){
-        try(Connection connection = this.dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(query)){
-            for(int i = 0; i < params.length; i++){
-                statement.setObject(i + 1, params[i]);
-            }
-        } catch (SQLException e){
-            System.out.printf("Message %s \n", e.getMessage());
-        }
-    }
-
-    public <T> void update(String query, CustomRowMapper<T> rowMapper, Object... params){
+    public Collection<T> findAll(String query, CustomRowMapper<T> rowMapper, Object... params) throws SQLException {
         try (Connection connection = this.dataSource.getConnection();
-        PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)){
-            for(int i = 0; i < params.length; i++){
-                statement.setObject(i + 1, params[i]);
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            List<T> result = new ArrayList<>();
+            for (int i = 0; i < params.length; i++) {
+                stmt.setObject(i + 1, params[i]);
             }
-            int row = statement.executeUpdate();
-            if(row != 0){
-                ResultSet resultSet = statement.getGeneratedKeys();
-                resultSet.next();
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                result.add(rowMapper.rowMap(rs));
             }
-        } catch (SQLException e){
-            System.out.printf("Message %s \n", e.getMessage());
+            return result;
         }
     }
 
-    public <T> void deleteBy(String query, CustomRowMapper<T> rowMapper, Object... params){
-        try(Connection connection = this.dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query)){
-            for(int i = 0; i < params.length; i++){
-                statement.setObject(i + 1, params[i]);
+    public T findBy(String query, CustomRowMapper<T> rowMapper, Object... params) throws SQLException {
+        try (Connection connection = this.dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            for (int i = 0; i < params.length; i++) {
+                stmt.setObject(i + 1, params[i]);
             }
-            statement.executeUpdate();
-        } catch (SQLException e){
-            System.out.printf("Message %s \n", e.getMessage());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rowMapper.rowMap(rs);
+            } else {
+                throw new ElementNotFoundException("There is no such element in database.");
+            }
         }
     }
 
+    public void insert(String query, Object... params) throws SQLException {
+        try (Connection connection = this.dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            for (int i = 0; i < params.length; i++) {
+                stmt.setObject(i + 1, params[i]);
+            }
+            stmt.executeUpdate();
+        }
+    }
+
+    public void update(String query, Object... params) throws SQLException {
+        try (Connection connection = this.dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            for (int i = 0; i < params.length; i++) {
+                stmt.setObject(i + 1, params[i]);
+            }
+            stmt.executeUpdate();
+        }
+    }
+
+    public void delete(String query, Object... params) throws SQLException {
+        try (Connection connection = this.dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            for (int i = 0; i < params.length; i++) {
+                stmt.setObject(i + 1, params[i]);
+            }
+            stmt.executeUpdate();
+        }
+    }
 
 }

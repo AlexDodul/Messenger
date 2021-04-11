@@ -1,11 +1,12 @@
 package com.github.dto;
 
 public class UserRegDto {
-    private String login;
 
     private String firstName;
 
     private String lastName;
+
+    private String login;
 
     private String password;
 

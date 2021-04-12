@@ -1,6 +1,8 @@
 package com.github.repository;
 
-public class UserColumns {
+public class UserTable {
+
+    public static final String tableName = "user";
 
     public static final String id = "id";
 

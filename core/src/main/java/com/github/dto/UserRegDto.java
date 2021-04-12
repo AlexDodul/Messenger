@@ -16,6 +16,16 @@ public class UserRegDto {
 
     private String phone;
 
+    public UserRegDto(String firstName, String lastName, String login, String password, String passwordConfirm, String email, String phone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.login = login;
+        this.password = password;
+        this.passwordConfirm = passwordConfirm;
+        this.email = email;
+        this.phone = phone;
+    }
+
     public String getLogin() {
         return login;
     }

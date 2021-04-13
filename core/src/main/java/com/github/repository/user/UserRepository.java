@@ -1,26 +1,26 @@
-package com.github.repository;
+package com.github.repository.user;
 
 import com.github.dto.UserAuthDto;
 import com.github.dto.UserRegDto;
 import com.github.entity.User;
 import com.github.exceptions.*;
 import com.github.micro.orm.CustomJdbcTemplate;
+import com.github.micro.orm.exceptions.CustomSQLException;
 import com.github.micro.orm.exceptions.ElementNotFoundException;
+import com.github.micro.orm.exceptions.InsertErrorException;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import java.sql.SQLException;
 import java.util.Collection;
 
 public class UserRepository implements IUserRepository{
 
-    private final HikariConfig config;
-
     private final CustomJdbcTemplate<User> customJdbcTemplate;
 
+    private final HikariDataSource dataSource;
+
     public UserRepository(HikariConfig config) {
-        this.config = config;
-        HikariDataSource dataSource = new HikariDataSource(this.config);
+        dataSource = new HikariDataSource(config);
         customJdbcTemplate = new CustomJdbcTemplate<>(dataSource);
     }
 
@@ -32,7 +32,7 @@ public class UserRepository implements IUserRepository{
                     sql,
                     UserRowMapper.getRowMapper()
             );
-        } catch (SQLException e) {
+        } catch (CustomSQLException e) {
             throw new DatabaseException(e.getMessage());
         }
     }
@@ -40,7 +40,7 @@ public class UserRepository implements IUserRepository{
     @Override
     public User findAuth(UserAuthDto userAuthDto) {
         String sql = "select * from "
-                + UserTable.tableName + "where "
+                + UserTable.tableName + " where "
                 + UserTable.login + " = ? and "
                 + UserTable.password + " = ?";
         try {
@@ -50,7 +50,7 @@ public class UserRepository implements IUserRepository{
                     userAuthDto.getLogin(),
                     userAuthDto.getPassword()
             );
-        } catch (SQLException e) {
+        } catch (CustomSQLException e) {
             throw new DatabaseException(e.getMessage());
         } catch (ElementNotFoundException e){
             throw new UserNotFoundException(e.getMessage());
@@ -60,7 +60,7 @@ public class UserRepository implements IUserRepository{
     @Override
     public User findReg(UserRegDto userRegDto) {
         String sql = "select * from "
-                + UserTable.tableName + "where "
+                + UserTable.tableName + " where "
                 + UserTable.login + " = ? and "
                 + UserTable.email + " = ? and "
                 + UserTable.phone + " = ?";
@@ -72,7 +72,7 @@ public class UserRepository implements IUserRepository{
                     userRegDto.getEmail(),
                     userRegDto.getPhone()
             );
-        } catch (SQLException e) {
+        } catch (CustomSQLException e) {
             throw new DatabaseException(e.getMessage());
         } catch (ElementNotFoundException e){
             throw new UserNotFoundException(e.getMessage());
@@ -80,7 +80,7 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public void insert(UserRegDto userRegDto) {
+    public User insert(UserRegDto userRegDto) {
         String sql = "insert into "
                 + UserTable.tableName + " ("
                 + UserTable.firstName + ", "
@@ -91,7 +91,8 @@ public class UserRepository implements IUserRepository{
                 + UserTable.password
                 + ") values (?, ?, ?, ?, ?, ?)";
         try {
-            customJdbcTemplate.insert(sql,
+            return customJdbcTemplate.insert(sql,
+                    UserRowMapper.getRowMapper(),
                     userRegDto.getFirstName(),
                     userRegDto.getLastName(),
                     userRegDto.getLogin(),
@@ -99,8 +100,8 @@ public class UserRepository implements IUserRepository{
                     userRegDto.getPhone(),
                     userRegDto.getPassword()
             );
-        } catch (SQLException e) {
-            throw new InsertUserException(e.getMessage());
+        } catch (CustomSQLException | InsertErrorException e) {
+            throw new UserInsertException(e.getMessage());
         }
     }
 
@@ -113,21 +114,20 @@ public class UserRepository implements IUserRepository{
                 + UserTable.login + " = ?, "
                 + UserTable.email + " = ?, "
                 + UserTable.phone + " = ?, "
-                + UserTable.password + " = ? "
-                + "where "
+                + UserTable.password + " = ?"
+                + " where "
                 + UserTable.id + " = ?";
         try {
-            customJdbcTemplate.insert(sql,
+            customJdbcTemplate.update(sql,
                     user.getFirstName(),
                     user.getLastName(),
                     user.getLogin(),
-                    user.getPassword(),
                     user.getEmail(),
                     user.getPhone(),
                     user.getPassword(),
                     user.getId()
             );
-        } catch (SQLException e) {
+        } catch (CustomSQLException e) {
             throw new UserUpdateException(e.getMessage());
         }
     }
@@ -139,7 +139,17 @@ public class UserRepository implements IUserRepository{
                 + UserTable.id + " = ?";
         try {
             customJdbcTemplate.delete(sql, user.getId());
-        } catch (SQLException e) {
+        } catch (CustomSQLException e) {
+            throw new UserDeleteException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteAll() {
+        String sql = "truncate " + UserTable.tableName;
+        try {
+            customJdbcTemplate.deleteAll(sql);
+        } catch (CustomSQLException e) {
             throw new UserDeleteException(e.getMessage());
         }
     }

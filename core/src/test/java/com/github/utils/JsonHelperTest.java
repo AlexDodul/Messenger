@@ -1,7 +1,7 @@
 package com.github.utils;
 
-import com.github.payload.Envelope;
 
+import com.github.payload.Envelope;
 import com.github.payload.Topic;
 import org.junit.Test;
 

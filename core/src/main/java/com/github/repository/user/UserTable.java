@@ -1,12 +1,14 @@
-package com.github.repository;
+package com.github.repository.user;
 
-public class UserColumns {
+public class UserTable {
+
+    public static final String tableName = "public.user";
 
     public static final String id = "id";
 
-    public static final String firstName = "firstName";
+    public static final String firstName = "first_name";
 
-    public static final String lastName = "lastName";
+    public static final String lastName = "last_name";
 
     public static final String login = "login";
 

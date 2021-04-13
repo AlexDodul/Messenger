@@ -1,38 +1,39 @@
-package com.github.repository;
+package com.github.repository.user;
 
 import com.github.dto.UserAuthDto;
 import com.github.dto.UserRegDto;
 import com.github.entity.User;
 import com.github.exceptions.*;
 import com.github.micro.orm.CustomJdbcTemplate;
+import com.github.micro.orm.exceptions.CustomSQLException;
 import com.github.micro.orm.exceptions.ElementNotFoundException;
+import com.github.micro.orm.exceptions.InsertErrorException;
+import com.github.micro.orm.exceptions.UpdateErrorException;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import java.sql.SQLException;
 import java.util.Collection;
 
 public class UserRepository implements IUserRepository{
 
-    private final HikariConfig config;
-
     private final CustomJdbcTemplate<User> customJdbcTemplate;
 
+    private final HikariDataSource dataSource;
+
     public UserRepository(HikariConfig config) {
-        this.config = config;
-        HikariDataSource dataSource = new HikariDataSource(this.config);
+        dataSource = new HikariDataSource(config);
         customJdbcTemplate = new CustomJdbcTemplate<>(dataSource);
     }
 
     @Override
     public Collection<User> findAll() {
-        String sql = "select * from " + config.getCatalog();
+        String sql = "select * from " + UserTable.tableName;
         try {
             return customJdbcTemplate.findAll(
                     sql,
                     UserRowMapper.getRowMapper()
             );
-        } catch (SQLException e) {
+        } catch (CustomSQLException e) {
             throw new DatabaseException(e.getMessage());
         }
     }
@@ -40,9 +41,9 @@ public class UserRepository implements IUserRepository{
     @Override
     public User findAuth(UserAuthDto userAuthDto) {
         String sql = "select * from "
-                + config.getCatalog() + "where "
-                + UserColumns.login + " = ? and "
-                + UserColumns.password + " = ?";
+                + UserTable.tableName + " where "
+                + UserTable.login + " = ? and "
+                + UserTable.password + " = ?";
         try {
             return customJdbcTemplate.findBy(
                     sql,
@@ -50,7 +51,7 @@ public class UserRepository implements IUserRepository{
                     userAuthDto.getLogin(),
                     userAuthDto.getPassword()
             );
-        } catch (SQLException e) {
+        } catch (CustomSQLException e) {
             throw new DatabaseException(e.getMessage());
         } catch (ElementNotFoundException e){
             throw new UserNotFoundException(e.getMessage());
@@ -60,10 +61,10 @@ public class UserRepository implements IUserRepository{
     @Override
     public User findReg(UserRegDto userRegDto) {
         String sql = "select * from "
-                + config.getCatalog() + "where " +
-                UserColumns.login + " = ? and "
-                + UserColumns.email + " = ? and "
-                + UserColumns.phone + " = ?";
+                + UserTable.tableName + " where "
+                + UserTable.login + " = ? and "
+                + UserTable.email + " = ? and "
+                + UserTable.phone + " = ?";
         try {
             return customJdbcTemplate.findBy(
                     sql,
@@ -72,7 +73,7 @@ public class UserRepository implements IUserRepository{
                     userRegDto.getEmail(),
                     userRegDto.getPhone()
             );
-        } catch (SQLException e) {
+        } catch (CustomSQLException e) {
             throw new DatabaseException(e.getMessage());
         } catch (ElementNotFoundException e){
             throw new UserNotFoundException(e.getMessage());
@@ -80,18 +81,19 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public void insert(UserRegDto userRegDto) {
+    public User insert(UserRegDto userRegDto) {
         String sql = "insert into "
-                + config.getCatalog() + " ("
-                + UserColumns.firstName + ", "
-                + UserColumns.lastName + ", "
-                + UserColumns.login + ", "
-                + UserColumns.email + ", "
-                + UserColumns.phone + ", "
-                + UserColumns.password
+                + UserTable.tableName + " ("
+                + UserTable.firstName + ", "
+                + UserTable.lastName + ", "
+                + UserTable.login + ", "
+                + UserTable.email + ", "
+                + UserTable.phone + ", "
+                + UserTable.password
                 + ") values (?, ?, ?, ?, ?, ?)";
         try {
-            customJdbcTemplate.insert(sql,
+            return customJdbcTemplate.insert(sql,
+                    UserRowMapper.getRowMapper(),
                     userRegDto.getFirstName(),
                     userRegDto.getLastName(),
                     userRegDto.getLogin(),
@@ -99,35 +101,35 @@ public class UserRepository implements IUserRepository{
                     userRegDto.getPhone(),
                     userRegDto.getPassword()
             );
-        } catch (SQLException e) {
-            throw new InsertUserException(e.getMessage());
+        } catch (CustomSQLException | InsertErrorException e) {
+            throw new UserInsertException(e.getMessage());
         }
     }
 
     @Override
-    public void update(User user) {
+    public User update(User user) {
         String sql = "update "
-                + config.getCatalog() + " set "
-                + UserColumns.firstName + " = ?, "
-                + UserColumns.lastName + " = ?, "
-                + UserColumns.login + " = ?, "
-                + UserColumns.email + " = ?, "
-                + UserColumns.phone + " = ?, "
-                + UserColumns.password + " = ? "
-                + "where "
-                + UserColumns.id + " = ?";
+                + UserTable.tableName + " set "
+                + UserTable.firstName + " = ?, "
+                + UserTable.lastName + " = ?, "
+                + UserTable.login + " = ?, "
+                + UserTable.email + " = ?, "
+                + UserTable.phone + " = ?, "
+                + UserTable.password + " = ?"
+                + " where "
+                + UserTable.id + " = ?";
         try {
-            customJdbcTemplate.insert(sql,
+            return customJdbcTemplate.update(sql,
+                    UserRowMapper.getRowMapper(),
                     user.getFirstName(),
                     user.getLastName(),
                     user.getLogin(),
-                    user.getPassword(),
                     user.getEmail(),
                     user.getPhone(),
                     user.getPassword(),
                     user.getId()
             );
-        } catch (SQLException e) {
+        } catch (CustomSQLException | UpdateErrorException e) {
             throw new UserUpdateException(e.getMessage());
         }
     }
@@ -135,11 +137,23 @@ public class UserRepository implements IUserRepository{
     @Override
     public void delete(User user) {
         String sql = "delete from "
-                + config.getCatalog() + " where "
-                + UserColumns.id + " = ?";
+                + UserTable.tableName + " where "
+                + UserTable.id + " = ?";
         try {
-            customJdbcTemplate.delete(sql, user.getId());
-        } catch (SQLException e) {
+            customJdbcTemplate.delete(sql,
+                    UserRowMapper.getRowMapper(),
+                    user.getId());
+        } catch (CustomSQLException e) {
+            throw new UserDeleteException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteAll() {
+        String sql = "truncate " + UserTable.tableName;
+        try {
+            customJdbcTemplate.deleteAll(sql);
+        } catch (CustomSQLException e) {
             throw new UserDeleteException(e.getMessage());
         }
     }

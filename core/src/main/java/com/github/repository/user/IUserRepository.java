@@ -1,4 +1,4 @@
-package com.github.repository;
+package com.github.repository.user;
 
 import com.github.dto.UserAuthDto;
 import com.github.dto.UserRegDto;
@@ -14,10 +14,12 @@ public interface IUserRepository {
 
     User findReg(UserRegDto userRegDto);
 
-    void insert(UserRegDto userRegDto);
+    User insert(UserRegDto userRegDto);
 
-    void update(User user);
+    User update(User user);
 
     void delete(User user);
+
+    void deleteAll();
 
 }

@@ -1,5 +1,9 @@
 package com.github.dto;
 
+import com.github.entity.User;
+
+import java.util.Objects;
+
 public class UserRegDto {
 
     private String firstName;
@@ -15,6 +19,26 @@ public class UserRegDto {
     private String email;
 
     private String phone;
+
+    public UserRegDto(String firstName, String lastName, String login, String password, String passwordConfirm, String email, String phone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.login = login;
+        this.password = password;
+        this.passwordConfirm = passwordConfirm;
+        this.email = email;
+        this.phone = phone;
+    }
+
+    public UserRegDto(User user) {
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.login = user.getLogin();
+        this.password = user.getPassword();
+        this.passwordConfirm = user.getPassword();
+        this.email = user.getEmail();
+        this.phone = user.getPhone();
+    }
 
     public String getLogin() {
         return login;
@@ -71,4 +95,18 @@ public class UserRegDto {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserRegDto that = (UserRegDto) o;
+        return firstName.equals(that.firstName) && lastName.equals(that.lastName) && login.equals(that.login) && password.equals(that.password) && passwordConfirm.equals(that.passwordConfirm) && email.equals(that.email) && phone.equals(that.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, login, password, passwordConfirm, email, phone);
+    }
+
 }

@@ -1,9 +1,6 @@
 package com.github.micro.orm;
 
-import com.github.micro.orm.exceptions.CustomSQLException;
-import com.github.micro.orm.exceptions.ElementNotFoundException;
-import com.github.micro.orm.exceptions.InsertErrorException;
-import com.github.micro.orm.exceptions.ParameterSettingException;
+import com.github.micro.orm.exceptions.*;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -66,11 +63,18 @@ public class CustomJdbcTemplate <T>{
         }
     }
 
-    public void update(String query, Object... params) {
+    public T update(String query, CustomRowMapper<T> rowMapper, Object... params) {
         try (Connection connection = this.dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
             setParameters(stmt, params);
-            stmt.executeUpdate();
+            int row = stmt.executeUpdate();
+            if(row != 0){
+                ResultSet resultSet = stmt.getGeneratedKeys();
+                resultSet.next();
+                return rowMapper.rowMap(resultSet);
+            } else {
+                throw new UpdateErrorException("Failed to update database.");
+            }
         } catch (SQLException e){
             throw new CustomSQLException(String.format("SQL Exception. Message: %s", e.getMessage()));
         }

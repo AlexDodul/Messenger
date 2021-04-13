@@ -8,6 +8,7 @@ import com.github.micro.orm.CustomJdbcTemplate;
 import com.github.micro.orm.exceptions.CustomSQLException;
 import com.github.micro.orm.exceptions.ElementNotFoundException;
 import com.github.micro.orm.exceptions.InsertErrorException;
+import com.github.micro.orm.exceptions.UpdateErrorException;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -106,7 +107,7 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public void update(User user) {
+    public User update(User user) {
         String sql = "update "
                 + UserTable.tableName + " set "
                 + UserTable.firstName + " = ?, "
@@ -118,7 +119,8 @@ public class UserRepository implements IUserRepository{
                 + " where "
                 + UserTable.id + " = ?";
         try {
-            customJdbcTemplate.update(sql,
+            return customJdbcTemplate.update(sql,
+                    UserRowMapper.getRowMapper(),
                     user.getFirstName(),
                     user.getLastName(),
                     user.getLogin(),
@@ -127,7 +129,7 @@ public class UserRepository implements IUserRepository{
                     user.getPassword(),
                     user.getId()
             );
-        } catch (CustomSQLException e) {
+        } catch (CustomSQLException | UpdateErrorException e) {
             throw new UserUpdateException(e.getMessage());
         }
     }
@@ -138,7 +140,9 @@ public class UserRepository implements IUserRepository{
                 + UserTable.tableName + " where "
                 + UserTable.id + " = ?";
         try {
-            customJdbcTemplate.delete(sql, user.getId());
+            customJdbcTemplate.delete(sql,
+                    UserRowMapper.getRowMapper(),
+                    user.getId());
         } catch (CustomSQLException e) {
             throw new UserDeleteException(e.getMessage());
         }

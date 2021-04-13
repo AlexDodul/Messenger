@@ -4,6 +4,7 @@ import com.github.dto.UserRegDto;
 import com.github.entity.User;
 import com.github.exceptions.UserInsertException;
 import com.github.exceptions.UserNotFoundException;
+import com.github.exceptions.UserUpdateException;
 import com.zaxxer.hikari.HikariConfig;
 import org.junit.Assert;
 import org.junit.Before;
@@ -71,7 +72,7 @@ public class UserRepositoryTest {
 
     @Test(expected = UserNotFoundException.class)
     public void findAuthNotExisting() {
-        userRepository.findAuth(UserRepositoryTestMock.notExisting);
+        userRepository.findAuth(UserRepositoryTestMock.notExistingAuth);
     }
 
     @Test
@@ -124,6 +125,11 @@ public class UserRepositoryTest {
         }
         Collection<User> act = userRepository.findAll();
         Assert.assertEquals(exp, act);
+    }
+
+    @Test(expected = UserUpdateException.class)
+    public void updateNotExisting(){
+        userRepository.update(UserRepositoryTestMock.notExistingUser);
     }
 
     @Test

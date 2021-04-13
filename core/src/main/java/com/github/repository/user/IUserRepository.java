@@ -16,7 +16,7 @@ public interface IUserRepository {
 
     User insert(UserRegDto userRegDto);
 
-    void update(User user);
+    User update(User user);
 
     void delete(User user);
 

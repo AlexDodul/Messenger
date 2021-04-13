@@ -2,6 +2,7 @@ package com.github.repository.user;
 
 import com.github.dto.UserAuthDto;
 import com.github.dto.UserRegDto;
+import com.github.entity.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -66,8 +67,18 @@ public class UserRepositoryTestMock {
             "Petro", "12345"
     );
 
-    static final UserAuthDto notExisting = new UserAuthDto(
+    static final UserAuthDto notExistingAuth = new UserAuthDto(
             "Bartolomeo", "777"
+    );
+
+    static final User notExistingUser = new User(
+            -100,
+            "AAAA",
+            "BBBB",
+            "asd",
+            "qwerty",
+            "pass",
+            "word"
     );
 
     static {

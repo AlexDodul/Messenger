@@ -1,9 +1,9 @@
 package com.github.config;
 
-import com.github.controllers.UsersController;
+import com.github.controllers.UserController;
 
 public class ControllerConfig {
-    public static UsersController usersController() {
-        return new UsersController();
+    public static UserController usersController() {
+        return new UserController();
     }
 }

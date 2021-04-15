@@ -1,10 +1,11 @@
 package com.github.handlers;
 
-import com.github.controllers.UsersController;
+import com.github.controllers.UserController;
 import com.github.dto.UserAuthDto;
 import com.github.exceptions.BadRequest;
-import com.github.payload.Token;
 import com.github.utils.JsonHelper;
+import com.github.utils.http.Status;
+
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -15,10 +16,10 @@ import java.util.stream.Collectors;
 
 public class UsersHandler extends HttpServlet {
 
-    private UsersController usersController;
+    private UserController userController;
 
-    public UsersHandler(UsersController usersController) {
-        this.usersController = usersController;
+    public UsersHandler(UserController userController) {
+        this.userController = userController;
     }
 
     @Override
@@ -32,17 +33,17 @@ public class UsersHandler extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ServletOutputStream out = resp.getOutputStream();
-        Token result = this.usersController.auth(new UserAuthDto());
-        String str = JsonHelper.toJson(result).orElseThrow(BadRequest::new);
-        out.write(str.getBytes());
+//        Token result = this.userController.auth(new UserAuthDto());
+//        String str = JsonHelper.toJson(result).orElseThrow(BadRequest::new);
+        out.write("str".getBytes());
         out.flush();
         out.close();
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         if (!"application/json".equalsIgnoreCase(req.getHeader("Content-Type"))) {
             resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "Invalid content type.");
@@ -51,11 +52,11 @@ public class UsersHandler extends HttpServlet {
             String body = req.getReader().lines().collect(Collectors.joining());
             UserAuthDto payload = JsonHelper.fromJson(body, UserAuthDto.class)
                     .orElseThrow(BadRequest::new);
-            Token result = this.usersController.auth(payload);
-            String str = JsonHelper.toJson(result).orElseThrow(BadRequest::new);
+//            Token result = this.userController.auth(payload);
+//            String str = JsonHelper.toJson(result).orElseThrow(BadRequest::new);
             resp.setContentType("application/json");
             resp.setStatus(HttpServletResponse.SC_ACCEPTED);
-            out.write(str.getBytes());
+            out.write("str".getBytes());
             out.flush();
             out.close();
         }

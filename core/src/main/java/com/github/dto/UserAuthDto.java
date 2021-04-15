@@ -10,6 +10,9 @@ public class UserAuthDto {
 
     private String password;
 
+    public UserAuthDto() {
+    }
+
     public UserAuthDto(String login, String password) {
         this.login = login;
         this.password = password;

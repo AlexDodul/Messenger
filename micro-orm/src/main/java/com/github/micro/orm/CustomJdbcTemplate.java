@@ -18,7 +18,7 @@ public class CustomJdbcTemplate <T>{
 
     public Collection<T> findAll(String query, CustomRowMapper<T> rowMapper, Object... params) {
         try (Connection connection = this.dataSource.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
+                PreparedStatement stmt = connection.prepareStatement(query)) {
             List<T> result = new ArrayList<>();
             setParameters(stmt, params);
             ResultSet rs = stmt.executeQuery();
@@ -65,7 +65,7 @@ public class CustomJdbcTemplate <T>{
 
     public T update(String query, CustomRowMapper<T> rowMapper, Object... params) {
         try (Connection connection = this.dataSource.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
+             PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             setParameters(stmt, params);
             int row = stmt.executeUpdate();
             if(row != 0){
@@ -73,7 +73,7 @@ public class CustomJdbcTemplate <T>{
                 resultSet.next();
                 return rowMapper.rowMap(resultSet);
             } else {
-                throw new UpdateErrorException("Failed to update database.");
+                throw new UpdateErrorException("Failed to insert into database.");
             }
         } catch (SQLException e){
             throw new CustomSQLException(String.format("SQL Exception. Message: %s", e.getMessage()));

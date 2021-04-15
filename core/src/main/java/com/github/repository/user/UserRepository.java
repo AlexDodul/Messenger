@@ -9,19 +9,18 @@ import com.github.micro.orm.exceptions.CustomSQLException;
 import com.github.micro.orm.exceptions.ElementNotFoundException;
 import com.github.micro.orm.exceptions.InsertErrorException;
 import com.github.micro.orm.exceptions.UpdateErrorException;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 
+import javax.sql.DataSource;
 import java.util.Collection;
 
 public class UserRepository implements IUserRepository{
 
     private final CustomJdbcTemplate<User> customJdbcTemplate;
 
-    private final HikariDataSource dataSource;
+    private final DataSource dataSource;
 
-    public UserRepository(HikariConfig config) {
-        dataSource = new HikariDataSource(config);
+    public UserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
         customJdbcTemplate = new CustomJdbcTemplate<>(dataSource);
     }
 
@@ -42,19 +41,22 @@ public class UserRepository implements IUserRepository{
     public User findAuth(UserAuthDto userAuthDto) {
         String sql = "select * from "
                 + UserTable.tableName + " where "
-                + UserTable.login + " = ? and "
-                + UserTable.password + " = ?";
+                + UserTable.login + " = ?";
         try {
-            return customJdbcTemplate.findBy(
+            User result = customJdbcTemplate.findBy(
                     sql,
                     UserRowMapper.getRowMapper(),
-                    userAuthDto.getLogin(),
-                    userAuthDto.getPassword()
+                    userAuthDto.getLogin()
             );
+            if(userAuthDto.getPassword().equals(result.getPassword())){
+                return result;
+            } else {
+                throw new WrongPasswordException("Wrong password for user " + userAuthDto.getLogin());
+            }
         } catch (CustomSQLException e) {
             throw new DatabaseException(e.getMessage());
         } catch (ElementNotFoundException e){
-            throw new UserNotFoundException(e.getMessage());
+            throw new LoginNotFoundException("Wrong login: " + userAuthDto.getLogin());
         }
     }
 
@@ -76,7 +78,7 @@ public class UserRepository implements IUserRepository{
         } catch (CustomSQLException e) {
             throw new DatabaseException(e.getMessage());
         } catch (ElementNotFoundException e){
-            throw new UserNotFoundException(e.getMessage());
+            throw new LoginNotFoundException(e.getMessage());
         }
     }
 
@@ -141,7 +143,6 @@ public class UserRepository implements IUserRepository{
                 + UserTable.id + " = ?";
         try {
             customJdbcTemplate.delete(sql,
-                    UserRowMapper.getRowMapper(),
                     user.getId());
         } catch (CustomSQLException e) {
             throw new UserDeleteException(e.getMessage());

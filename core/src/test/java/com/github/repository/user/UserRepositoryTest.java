@@ -1,10 +1,8 @@
 package com.github.repository.user;
 
-import com.github.config.AppConfig;
-import com.github.config.DatabaseConfig;
 import com.github.dto.UserRegDto;
 import com.github.entity.User;
-import com.github.exceptions.LoginNotFoundException;
+import com.github.exceptions.WrongLoginException;
 import com.github.exceptions.UserInsertException;
 import com.github.exceptions.UserUpdateException;
 import com.zaxxer.hikari.HikariConfig;
@@ -75,7 +73,7 @@ public class UserRepositoryTest {
         Assert.assertEquals(exp, act);
     }
 
-    @Test(expected = LoginNotFoundException.class)
+    @Test(expected = WrongLoginException.class)
     public void findAuthNotExisting() {
         userRepository.findAuth(UserRepositoryTestMock.notExistingAuth);
     }

@@ -4,6 +4,6 @@ import com.github.controllers.UserController;
 
 public class ControllerConfig {
     public static UserController usersController() {
-        return new UserController();
+        return new UserController(AppConfig.getUserService());
     }
 }

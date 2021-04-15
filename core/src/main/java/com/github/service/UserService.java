@@ -3,7 +3,6 @@ package com.github.service;
 import com.github.dto.UserAuthDto;
 import com.github.dto.UserRegDto;
 import com.github.entity.User;
-import com.github.exceptions.LoginNotFoundException;
 import com.github.repository.user.IUserRepository;
 
 import java.util.ArrayList;

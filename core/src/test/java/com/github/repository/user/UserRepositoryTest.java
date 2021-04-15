@@ -1,11 +1,15 @@
 package com.github.repository.user;
 
+import com.github.config.AppConfig;
+import com.github.config.DatabaseConfig;
 import com.github.dto.UserRegDto;
 import com.github.entity.User;
+import com.github.exceptions.LoginNotFoundException;
 import com.github.exceptions.UserInsertException;
-import com.github.exceptions.UserNotFoundException;
 import com.github.exceptions.UserUpdateException;
 import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,12 +17,13 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class UserRepositoryTest {
 
-    private final HikariConfig config = new HikariConfig("src/main/resources/hikari.properties");
-    private final IUserRepository userRepository = new UserRepository(config);
+    private static HikariConfig config = new HikariConfig("src/test/resources/hikari.properties");
+
+    private static final IUserRepository userRepository = new UserRepository(
+            new HikariDataSource(config));
 
     @Before
     public void setUp(){
@@ -26,11 +31,11 @@ public class UserRepositoryTest {
         for(UserRegDto userRegDto : UserRepositoryTestMock.userRegCollection){
             userRepository.insert(userRegDto);
         }
-        try {
-            TimeUnit.MILLISECONDS.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    }
+
+    @After
+    public void tearDown(){
+        userRepository.deleteAll();
     }
 
     @Test
@@ -70,7 +75,7 @@ public class UserRepositoryTest {
         Assert.assertEquals(exp, act);
     }
 
-    @Test(expected = UserNotFoundException.class)
+    @Test(expected = LoginNotFoundException.class)
     public void findAuthNotExisting() {
         userRepository.findAuth(UserRepositoryTestMock.notExistingAuth);
     }
@@ -143,7 +148,7 @@ public class UserRepositoryTest {
             }
         }
         Collection<User> act = userRepository.findAll();
-        Assert.assertEquals(exp, act);
+        Assert.assertArrayEquals(exp.toArray(), act.toArray());
     }
 
     @Test

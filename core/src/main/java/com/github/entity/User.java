@@ -1,14 +1,10 @@
 package com.github.entity;
 
-import com.github.micro.orm.CustomRowMapper;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Objects;
 
 public class User {
 
-    private long id;
+    private Long id;
 
     private String firstName;
 
@@ -32,7 +28,7 @@ public class User {
         this.phone = phone;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -93,7 +89,7 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(phone, user.phone);
+        return id.equals(user.id) && firstName.equals(user.firstName) && lastName.equals(user.lastName) && email.equals(user.email) && login.equals(user.login) && password.equals(user.password) && phone.equals(user.phone);
     }
 
     @Override

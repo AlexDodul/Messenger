@@ -1,4 +1,4 @@
 package com.github.handlers;
 
-public class WebsocketHandler {
+public class WebsocketHandler{
 }

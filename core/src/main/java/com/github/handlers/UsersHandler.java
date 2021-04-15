@@ -4,41 +4,21 @@ import com.github.controllers.UsersController;
 import com.github.dto.UserAuthDto;
 import com.github.exceptions.BadRequest;
 import com.github.payload.Token;
-import com.github.service.IUserService;
-import com.github.service.UserService;
 import com.github.utils.JsonHelper;
-
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 
-public class UsersHandler extends HttpServlet implements InvocationHandler {
-    private static final Logger log = LoggerFactory.getLogger(UserService.class);
-
-    private IUserService userService;
+public class UsersHandler extends HttpServlet {
 
     private UsersController usersController;
 
     public UsersHandler(UsersController usersController) {
         this.usersController = usersController;
-    }
-
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        log.info("Before call to method: {}, with args: {}", method.getName(), args);
-        Object result = method.invoke(this.userService, args);
-        log.info("After call to method: {}", result);
-        return result;
     }
 
     @Override

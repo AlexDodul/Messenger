@@ -23,7 +23,11 @@ public class UserService implements IUserService{
 
     @Override
     public User findAuth(UserAuthDto userAuthDto) {
-        User result = this.cache.stream().filter(user -> user.getLogin().equals(userAuthDto.getLogin())).findFirst().orElse(null);
+        User result = this.cache.stream()
+                .filter(user ->
+                        user.getLogin().equals(userAuthDto.getLogin())
+                        && user.getPassword().equals(userAuthDto.getPassword())
+                ).findFirst().orElse(null);
         if(Objects.isNull(result)){
             result = this.userRepository.findAuth(userAuthDto);
             this.cache.add(result);

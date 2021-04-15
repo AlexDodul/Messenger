@@ -1,5 +1,6 @@
 package com.github.handlers;
 
+import com.github.service.IUserService;
 import com.github.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +10,9 @@ import java.lang.reflect.Method;
 public class UsersHandler implements InvocationHandler {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
-    private final UserService userService;
+    private final IUserService userService;
 
-    public UsersHandler(UserService userService) {
+    public UsersHandler(IUserService userService) {
         this.userService = userService;
     }
 

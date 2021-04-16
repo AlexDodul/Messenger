@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Form register</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <section>				
+                <div id="container" >
+                    <div id="wrapper">
+                        <div id="register" class="animate form">
+                            <form id="form_id" onsubmit="javascript:return validate('form_id','email');"> 
+                                <h1> Register </h1> 
+								<p> 
+                                    <label for="firstname" class="fname">Your first name</label>
+                                    <input id="firstname" name="firstname" required="required" type="text" placeholder="Johnny" />
+                                </p>
+								<p> 
+                                    <label for="lastname" class="lname">Your last name</label>
+                                    <input id="lastname" name="lastname" required="required" type="text" placeholder="Depp" />
+                                </p>
+                                <p> 
+                                    <label for="usernamesignup" class="uname">Your login</label>
+                                    <input id="usernamesignup" name="usernamesignup" required="required" type="text" placeholder="Nagibator2000" />
+                                </p>
+                                <p> 
+                                    <label for="email" class="youmail"> Your email</label>
+                                    <input id="email" name="email" required="required" type="email" placeholder="myemail@gmail.com"/> 
+                                </p>
+                                <p> 
+                                    <label for="passwordsignup" class="youpasswd">Your password </label>
+                                    <input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="For example X8df!90EO"/>
+                                </p>
+                                <p> 
+                                    <label for="passwordsignup_confirm" class="youpasswd">Confirm the password </label>
+                                    <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" placeholder="For example X8df!90EO"/>
+                                </p>
+								<p> 
+                                    <label for="phone" class="youphone">Your phone </label>
+                                    <input id="phone" name="phone" required="required" type="phone" placeholder="For example 0500000000"/>
+                                </p>
+                                <p class="signin button"> 
+									<input type="submit" value="Registration"/> 
+								</p>
+                                <p class="change_link">  
+									Are you already registered?
+									<a href="tologin.html" class="to_register"> Then come in </a>
+								</p>
+                            </form>
+                        </div>
+                    </div>
+                </div>  
+            </section>
+        </div>
+		<script>
+		function validate(form_id,email) {
+			var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+			var address = document.forms[form_id].elements[email].value;
+				if(reg.test(address) == false) {
+				alert('Please enter a valid email');
+				return false;
+			}
+		}
+		</script>
+		<script>
+		function isValidPhone(phone) {
+    var found = phone.search(/^(\+{1}\d{2,3}\s?[(]{1}\d{1,3}[)]{1}\s?\d+|\+\d{2,3}\s{1}\d+|\d+){1}[\s|-]?\d+([\s|-]?\d+){1,2}$/);
+    if(found > -1) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+		</script>
+    </body>
+</html>

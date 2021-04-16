@@ -7,23 +7,21 @@ import java.io.File;
 
 public class ServerConfig {
 
-    public static Tomcat tomcat() throws ServletException {
-        Tomcat tomcat = new Tomcat();
+    private static void configureTomcat(Tomcat tomcat) throws ServletException {
         String webPort = System.getenv("PORT");
         if (webPort == null || webPort.isEmpty()) {
             webPort = "8080";
         }
-        tomcat.setPort(Integer.valueOf(webPort));
-        Context ctx = tomcat.addWebapp("/", new File(".").getAbsolutePath());
+        tomcat.setPort(Integer.parseInt(webPort));
+        Context ctx = tomcat.addWebapp("", new File(".").getAbsolutePath());
 
-        tomcat.addServlet("","UsersHandler", HandlerConfig.usersHandler());
+        tomcat.addServlet("","UsersHandler", AppConfig.getUsersHandler());
         ctx.addServletMappingDecoded("/*", "UsersHandler");
+    }
+
+    public static Tomcat getTomcat() throws ServletException {
+        Tomcat tomcat = new Tomcat();
+        configureTomcat(tomcat);
         return tomcat;
     }
-//    public static UserService userService(){
-//        UserService origin = UserService.getUserService();
-//        InvocationHandler handler = new UsersHandler(origin);
-//        return (UserService) Proxy.newProxyInstance(origin.getClass().getClassLoader(),
-//                new Class[] {UserService.class}, handler);
-//    }
 }

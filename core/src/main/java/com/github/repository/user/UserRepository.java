@@ -15,13 +15,13 @@ import java.util.Collection;
 
 public class UserRepository implements IUserRepository{
 
-    private final CustomJdbcTemplate<User> customJdbcTemplate;
+    private CustomJdbcTemplate<User> customJdbcTemplate;
 
     private final DataSource dataSource;
 
     public UserRepository(DataSource dataSource) {
         this.dataSource = dataSource;
-        customJdbcTemplate = new CustomJdbcTemplate<>(dataSource);
+        customJdbcTemplate = new CustomJdbcTemplate<>(this.dataSource);
     }
 
     @Override

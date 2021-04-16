@@ -1,11 +1,12 @@
 package com.github.controllers;
 
-import com.github.utils.http.Status;
+import com.github.dto.UserAuthDto;
+import com.github.dto.UserRegDto;
 
 public interface IUserController {
 
-    Status authorize(String body);
+    String authorize(UserAuthDto userAuthDto);
 
-    Status register(String body);
+    void register(UserRegDto userRegDto);
 
 }

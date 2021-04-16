@@ -7,7 +7,13 @@ import javax.sql.DataSource;
 
 public class DatabaseConfig {
 
-    private static final HikariConfig config = new HikariConfig("src/main/resources/hikari.properties");
+    private static final HikariConfig config = new HikariConfig();// = new HikariConfig("src/main/resources/hikari.properties");
+
+    static{
+        config.setJdbcUrl("jdbc:postgresql://localhost:54320/mydb");
+        config.setUsername("john");
+        config.setPassword("pwd0123456789");
+    }
 
     private static DataSource dataSource = new HikariDataSource(config);
 
@@ -18,6 +24,5 @@ public class DatabaseConfig {
     public static DataSource getDataSource() {
         return dataSource;
     }
-
 
 }

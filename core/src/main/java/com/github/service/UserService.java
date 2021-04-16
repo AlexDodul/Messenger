@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class UserService implements IUserService{
 
-    private IUserRepository userRepository;
+    private final IUserRepository userRepository;
 
     public List<User> cache;
 

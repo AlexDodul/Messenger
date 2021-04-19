@@ -1,12 +1,13 @@
 package com.github.payload;
 
 import java.io.Serializable;
+import java.security.PublicKey;
 import java.util.Date;
 import java.util.Objects;
 
 public class Token implements Serializable {
 
-    private Long id;
+    private String id;
 
     private String firstName;
 
@@ -16,23 +17,26 @@ public class Token implements Serializable {
 
     private Date createdAt;
 
+    private PublicKey publicKey;
+
     public Token() {
 
     }
 
-    public Token(Long id, String firstName, String lastName, Date expireIn, Date createdAt) {
+    public Token(String id, String firstName, String lastName, Date expireIn, Date createdAt, PublicKey publicKey) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.expireIn = expireIn;
         this.createdAt = createdAt;
+        this.publicKey = publicKey;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -66,6 +70,14 @@ public class Token implements Serializable {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public PublicKey getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(PublicKey publicKey) {
+        this.publicKey = publicKey;
     }
 
     @Override

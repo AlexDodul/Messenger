@@ -1,6 +1,5 @@
 package com.github.handlers;
 
-import ch.qos.logback.core.subst.Token;
 import com.github.controllers.IUserController;
 import com.github.dto.UserAuthDto;
 import com.github.dto.UserRegDto;
@@ -96,7 +95,7 @@ public class UsersHandler extends HttpServlet {
                             .orElseThrow(BadRequest::new);
                     this.userController.register(payload);
                     resp.setStatus(HttpServletResponse.SC_ACCEPTED);
-                } catch (DatabaseException e) {
+                } catch (DatabaseException | KeyGenerationException e) {
                     resp.setStatus(500);
                 } catch (BadRequest e) {
                     resp.setStatus(400);

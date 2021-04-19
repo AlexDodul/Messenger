@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Form</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <section>				
+                <div id="container" >
+                    <div id="wrapper">
+                        <div id="login" class="animate form">
+                            <form>
+                                <h1>LogIn</h1> 
+                                <p> 
+                                    <label for="username" class="uname"> Your email or login </label>
+                                    <input id="username" name="username" required="required" type="text" placeholder="Your login or my_email@gmail.com"/>
+                                </p>
+                                <p> 
+                                    <label for="password" class="youpasswd"> Your password </label>
+                                    <input id="password" name="password" required="required" type="password" placeholder="For example X8df!90EO" /> 
+                                </p>
+                                <p class="keeplogin"> 
+									<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" /> 
+									<label for="loginkeeping">Remember me</label>
+								</p>
+                                <p class="login button"> 
+                                    <input type="submit" value="Sign In" /> 
+								</p>
+                                <p class="change_link">
+									Not with us yet?
+									<a href="toregister.html" class="to_register">Register now</a>
+								</p>
+                            </form>
+                        </div>
+                    </div>
+                </div>  
+            </section>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            axios.post('http://localhost:8080/', {
+                username: 'username',
+                password: 'password',
+
+            })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+        </script>
+    </body>
+</html>

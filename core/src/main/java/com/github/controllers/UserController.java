@@ -33,7 +33,7 @@ public class UserController implements IUserController {
         keyPairGenerator.initialize(2048);
         keyPair = keyPairGenerator.generateKeyPair();
         Token token = new Token(
-                user.getId().toString(),
+                user.getLogin(),
                 user.getFirstName(),
                 user.getLastName(),
                 new Date(System.currentTimeMillis() + 1800000),

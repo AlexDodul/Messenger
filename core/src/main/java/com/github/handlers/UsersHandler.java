@@ -82,8 +82,6 @@ public class UsersHandler extends HttpServlet {
             System.out.println(body);
             UserRegDto payload = JsonHelper.fromJson(body, UserRegDto.class)
                     .orElseThrow(BadRequest::new);
-            System.out.println(body);
-            System.out.println("dasdsadsadsa");
             this.userController.register(payload);
 //            String result = this.userController.register(payload);
 //            String str = JsonHelper.toJson(result).orElseThrow(BadRequest::new);

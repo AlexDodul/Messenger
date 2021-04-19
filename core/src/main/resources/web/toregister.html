@@ -11,7 +11,7 @@
                 <div id="container" >
                     <div id="wrapper">
                         <div id="register" class="animate form">
-                            <form id="form_id" onsubmit="javascript:return validate('form_id','email');"> 
+                            <form id="form_id"  onsubmit="javascript:return validate('form_id','email');">
                                 <h1> Register </h1> 
 								<p> 
                                     <label for="firstname" class="fname">Your first name</label>
@@ -42,7 +42,7 @@
                                     <input id="phone" name="phone" required="required" type="phone" placeholder="For example 0500000000"/>
                                 </p>
                                 <p class="signin button"> 
-									<input type="submit" value="Registration"/> 
+									<input type="submit" onclick="clickon()" value="Registration"/>
 								</p>
                                 <p class="change_link">  
 									Are you already registered?
@@ -78,29 +78,30 @@
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
-            const firstName = document.getElementById('firstname')
-            const lastName = document.getElementById('lastname')
-            const login = document.getElementById('usernamesignup')
-            const password = document.getElementById('password')
-            const passwordConfirm = document.getElementById('passwordConfirm')
-            const email = document.getElementById('email')
-            const phone = document.getElementById('phone')
-            axios.post('http://localhost:8080/reg', {
-                firstName: firstName,
-                lastName: lastName,
-                login: login,
-                password: password,
-                passwordConfirm: passwordConfirm,
-                email: email,
-                phone: phone
-            })
-                .then(function (response) {
-                    console.log(response);
+            function clickon() {
+                const firstName = document.getElementById('firstname').value;
+                const lastName = document.getElementById('lastname').value;
+                const login = document.getElementById('usernamesignup').value;
+                const password = document.getElementById('password').value;
+                const passwordConfirm = document.getElementById('passwordConfirm').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                axios.post('http://localhost:8080/reg', {
+                    firstName: firstName,
+                    lastName: lastName,
+                    login: login,
+                    password: password,
+                    passwordConfirm: passwordConfirm,
+                    email: email,
+                    phone: phone
                 })
-                .catch(function (error) {
-                    console.log(error);
-                });
-
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
         </script>
     </body>
 </html>

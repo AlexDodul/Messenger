@@ -29,7 +29,7 @@
 									<label for="loginkeeping">Remember me</label>
 								</p>
                                 <p class="login button"> 
-                                    <input type="submit" value="Sign In" /> 
+                                    <input type="submit" onclick="ClickOn()" value="Sign In" />
 								</p>
                                 <p class="change_link">
 									Not with us yet?
@@ -44,17 +44,22 @@
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
-            axios.post('http://localhost:8080/', {
-                username: 'username',
-                password: 'password',
+          function ClickOn() {
+              const username = document.getElementById('username').value;
+              const password = document.getElementById('password').value;
+              axios.post('http://localhost:8080/', {
+                  username: username,
+                  password: password,
 
-            })
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+              })
+                  .then(function (response) {
+                      console.log(response);
+                  })
+                  .catch(function (error) {
+                      console.log(error);
+                  });
+          }
+
 
         </script>
     </body>

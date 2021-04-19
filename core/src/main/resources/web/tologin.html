@@ -41,5 +41,20 @@
                 </div>  
             </section>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js">
+            // Отправка POST запроса
+            axios.post('/user', {
+                username: 'username', // Имя
+                password: 'password' // Фамилия
+            })
+                // Если запрос успешен
+                .then(function (response) {
+                    console.log(response);
+                })
+                // Если запрос с ошибкой
+                .catch(function (error) {
+                    console.log(error);
+                });
+        </script>
     </body>
 </html>

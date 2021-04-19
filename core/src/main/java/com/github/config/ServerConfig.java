@@ -13,7 +13,7 @@ public class ServerConfig {
         if (webPort == null || webPort.isEmpty()) {
             webPort = "8080";
         }
-        tomcat.setPort(Integer.valueOf(webPort));
+        tomcat.setPort(Integer.parseInt(webPort));
         Context ctx = tomcat.addWebapp("/", new File(".").getAbsolutePath());
 
         tomcat.addServlet("","UsersHandler", HandlerConfig.usersHandler());

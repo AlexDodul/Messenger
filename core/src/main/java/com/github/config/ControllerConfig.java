@@ -4,6 +4,6 @@ import com.github.controllers.UsersController;
 
 public class ControllerConfig {
     public static UsersController usersController() {
-        return new UsersController();
+        return new UsersController(userService);
     }
 }

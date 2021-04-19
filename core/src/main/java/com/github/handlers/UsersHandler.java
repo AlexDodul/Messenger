@@ -38,31 +38,35 @@ public class UsersHandler extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+        PrintWriter writer = null;
         try {
             String url = req.getRequestURI();
-            PrintWriter writer = resp.getWriter();
+            writer = resp.getWriter();
             if (url.equals("/auth")) {
                 resp.setContentType("text/html");
                 String html = Files.readString(Path.of(System.getProperty("user.dir") + "/core/src/main/resources/web/tologin.html"), StandardCharsets.US_ASCII);
-                resp.setContentLength(html.length() + 1);
+                resp.setContentLength(html.length());
                 writer.write(html);
             } else if (url.equals("/reg")) {
                 resp.setContentType("text/html");
                 String html = Files.readString(Path.of(System.getProperty("user.dir") + "/core/src/main/resources/web/toregister.html"), StandardCharsets.US_ASCII);
-                resp.setContentLength(html.length() + 1);
+                resp.setContentLength(html.length());
                 writer.write(html);
             } else {
                 resp.setStatus(404);
             }
-            writer.flush();
-            writer.close();
         } catch (IOException e){
             resp.setStatus(500);
+        } finally {
+            if(writer != null) {
+                writer.flush();
+                writer.close();
+            }
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 
         String url = req.getRequestURI();
 

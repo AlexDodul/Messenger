@@ -1,5 +1,8 @@
 package com.github.config;
 
+import com.github.controllers.IUserController;
+import com.github.controllers.UserController;
+import com.github.handlers.UsersHandler;
 import com.github.repository.user.IUserRepository;
 import com.github.repository.user.UserRepository;
 import com.github.service.IUserService;
@@ -11,6 +14,10 @@ public class AppConfig {
 
     private static IUserService userService = new UserService(userRepository);
 
+    private static IUserController userController = new UserController(userService);
+
+    private static UsersHandler usersHandler = new UsersHandler(userController);
+
     public static IUserRepository getUserRepository() {
         return userRepository;
     }
@@ -19,6 +26,12 @@ public class AppConfig {
         return userService;
     }
 
+    public static IUserController getUserController(){
+        return userController;
+    }
 
+    public static UsersHandler getUsersHandler() {
+        return usersHandler;
+    }
 
 }

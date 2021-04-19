@@ -1,12 +1,10 @@
 package com.github.repository.user;
 
-import com.github.config.AppConfig;
-import com.github.config.DatabaseConfig;
 import com.github.dto.UserRegDto;
 import com.github.entity.User;
-import com.github.exceptions.LoginNotFoundException;
 import com.github.exceptions.UserInsertException;
 import com.github.exceptions.UserUpdateException;
+import com.github.exceptions.WrongLoginException;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.junit.After;
@@ -20,7 +18,7 @@ import java.util.List;
 
 public class UserRepositoryTest {
 
-    private static HikariConfig config = new HikariConfig("src/test/resources/hikari.properties");
+    private static final HikariConfig config = new HikariConfig("src/test/resources/hikari.properties");
 
     private static final IUserRepository userRepository = new UserRepository(
             new HikariDataSource(config));
@@ -75,7 +73,7 @@ public class UserRepositoryTest {
         Assert.assertEquals(exp, act);
     }
 
-    @Test(expected = LoginNotFoundException.class)
+    @Test(expected = WrongLoginException.class)
     public void findAuthNotExisting() {
         userRepository.findAuth(UserRepositoryTestMock.notExistingAuth);
     }

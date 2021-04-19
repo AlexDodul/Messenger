@@ -15,13 +15,13 @@ import java.util.Collection;
 
 public class UserRepository implements IUserRepository{
 
-    private final CustomJdbcTemplate<User> customJdbcTemplate;
+    private CustomJdbcTemplate<User> customJdbcTemplate;
 
     private final DataSource dataSource;
 
     public UserRepository(DataSource dataSource) {
         this.dataSource = dataSource;
-        customJdbcTemplate = new CustomJdbcTemplate<>(dataSource);
+        customJdbcTemplate = new CustomJdbcTemplate<>(this.dataSource);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class UserRepository implements IUserRepository{
         } catch (CustomSQLException e) {
             throw new DatabaseException(e.getMessage());
         } catch (ElementNotFoundException e){
-            throw new LoginNotFoundException("Wrong login: " + userAuthDto.getLogin());
+            throw new WrongLoginException("Wrong login: " + userAuthDto.getLogin());
         }
     }
 
@@ -78,7 +78,7 @@ public class UserRepository implements IUserRepository{
         } catch (CustomSQLException e) {
             throw new DatabaseException(e.getMessage());
         } catch (ElementNotFoundException e){
-            throw new LoginNotFoundException(e.getMessage());
+            throw new WrongLoginException(e.getMessage());
         }
     }
 

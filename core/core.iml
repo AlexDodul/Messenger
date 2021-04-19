@@ -43,5 +43,6 @@
     <orderEntry type="library" name="Maven: org.postgresql:postgresql:42.2.19" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.checkerframework:checker-qual:3.5.0" level="project" />
     <orderEntry type="module" module-name="micro-orm" />
+    <orderEntry type="library" name="axios" level="application" />
   </component>
 </module>

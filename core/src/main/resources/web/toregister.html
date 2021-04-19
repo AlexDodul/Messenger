@@ -78,14 +78,21 @@
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
+            const firstName = document.getElementById('firstname')
+            const lastName = document.getElementById('lastname')
+            const login = document.getElementById('usernamesignup')
+            const password = document.getElementById('password')
+            const passwordConfirm = document.getElementById('passwordConfirm')
+            const email = document.getElementById('email')
+            const phone = document.getElementById('phone')
             axios.post('http://localhost:8080/reg', {
-                firstname: 'firstname',
-                lastname: 'lastname',
-                login: 'usernamesignup',
-                email: 'email',
-                password: 'password',
-                passwordConfirm: 'passwordConfirm',
-                phone: 'phone'
+                firstName: firstName,
+                lastName: lastName,
+                login: login,
+                password: password,
+                passwordConfirm: passwordConfirm,
+                email: email,
+                phone: phone
             })
                 .then(function (response) {
                     console.log(response);

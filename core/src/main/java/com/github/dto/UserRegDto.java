@@ -20,6 +20,9 @@ public class UserRegDto {
 
     private String phone;
 
+    public UserRegDto() {
+    }
+
     public UserRegDto(String firstName, String lastName, String login, String password, String passwordConfirm, String email, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;

@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 
 public class DatabaseConfig {
 
-    private static final HikariConfig config = new HikariConfig();// = new HikariConfig("src/main/resources/hikari.properties");
+    private static final HikariConfig config = new HikariConfig();//System.getProperty("user.dir") + "/core/src/main/resources/web/tologin.html");
 
     static{
         config.setJdbcUrl("jdbc:postgresql://localhost:54320/mydb");

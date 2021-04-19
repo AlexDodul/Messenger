@@ -54,6 +54,8 @@ public class UsersHandler extends HttpServlet {
         }else {
             resp.setStatus(404);
         }
+        writer.flush();
+        writer.close();
     }
 
     @Override
@@ -77,6 +79,7 @@ public class UsersHandler extends HttpServlet {
         } else if(url.equals("/reg")){
             ServletOutputStream out = resp.getOutputStream();
             String body = req.getReader().lines().collect(Collectors.joining());
+            System.out.println(body);
             UserRegDto payload = JsonHelper.fromJson(body, UserRegDto.class)
                     .orElseThrow(BadRequest::new);
             System.out.println(body);

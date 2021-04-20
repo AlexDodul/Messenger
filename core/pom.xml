@@ -125,6 +125,14 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-websocket -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-websocket</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

@@ -1,12 +1,13 @@
 package com.github.payload;
 
 import java.io.Serializable;
+import java.security.PublicKey;
 import java.util.Date;
 import java.util.Objects;
 
 public class Token implements Serializable {
 
-    private Long id;
+    private String login;
 
     private String firstName;
 
@@ -16,24 +17,27 @@ public class Token implements Serializable {
 
     private Date createdAt;
 
+    private PublicKey publicKey;
+
     public Token() {
 
     }
 
-    public Token(Long id, String firstName, String lastName, Date expireIn, Date createdAt) {
-        this.id = id;
+    public Token(String login, String firstName, String lastName, Date expireIn, Date createdAt, PublicKey publicKey) {
+        this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
         this.expireIn = expireIn;
         this.createdAt = createdAt;
+        this.publicKey = publicKey;
     }
 
-    public Long getId() {
-        return id;
+    public String getLogin() {
+        return login;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getFirstName() {
@@ -68,16 +72,24 @@ public class Token implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public PublicKey getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(PublicKey publicKey) {
+        this.publicKey = publicKey;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Token token = (Token) o;
-        return Objects.equals(id, token.id) && Objects.equals(firstName, token.firstName) && Objects.equals(lastName, token.lastName) && Objects.equals(expireIn, token.expireIn) && Objects.equals(createdAt, token.createdAt);
+        return Objects.equals(login, token.login) && Objects.equals(firstName, token.firstName) && Objects.equals(lastName, token.lastName) && Objects.equals(expireIn, token.expireIn) && Objects.equals(createdAt, token.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, expireIn, createdAt);
+        return Objects.hash(login, firstName, lastName, expireIn, createdAt);
     }
 }

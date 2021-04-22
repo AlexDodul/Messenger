@@ -16,7 +16,7 @@ public class ServerConfig {
         Context ctx = tomcat.addWebapp("", new File(".").getAbsolutePath());
 
         tomcat.addServlet("","UsersHandler", AppConfig.getUsersHandler());
-        ctx.addServletMappingDecoded("/users", "UsersHandler");
+        ctx.addServletMappingDecoded("/*", "UsersHandler");
     }
 
     public static Tomcat getTomcat() throws ServletException {

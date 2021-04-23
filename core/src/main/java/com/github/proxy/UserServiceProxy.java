@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-public class UserServiceProxy implements InvocationHandler {
+public class UserServiceProxy implements InvocationHandler{
 
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
@@ -24,4 +24,5 @@ public class UserServiceProxy implements InvocationHandler {
         log.info("After call to method: {}", result);
         return result;
     }
+
 }

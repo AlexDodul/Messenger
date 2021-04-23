@@ -42,12 +42,12 @@ public class UsersHandler extends HttpServlet {
         try {
             String url = req.getRequestURI();
             writer = resp.getWriter();
-            if (url.equals("/auth")) {
+            if (url.equals("/users/auth")) {
                 resp.setContentType("text/html");
                 String html = Files.readString(Path.of(System.getProperty("user.dir") + "/core/src/main/resources/web/tologin.html"), StandardCharsets.US_ASCII);
                 resp.setContentLength(html.length());
                 writer.write(html);
-            } else if (url.equals("/reg")) {
+            } else if (url.equals("/users/reg")) {
                 resp.setContentType("text/html");
                 String html = Files.readString(Path.of(System.getProperty("user.dir") + "/core/src/main/resources/web/toregister.html"), StandardCharsets.US_ASCII);
                 resp.setContentLength(html.length());
@@ -70,7 +70,7 @@ public class UsersHandler extends HttpServlet {
 
         String url = req.getRequestURI();
 
-        if (url.equals("/auth")) {
+        if (url.equals("/users/auth")) {
             try {
                 ServletOutputStream out = resp.getOutputStream();
                 String body = req.getReader().lines().collect(Collectors.joining());
@@ -89,11 +89,10 @@ public class UsersHandler extends HttpServlet {
             } catch (WrongLoginException | WrongPasswordException e) {
                 resp.setStatus(401);
             }
-        } else if (url.equals("/reg")) {
+        } else if (url.equals("/users/reg")) {
             try {
                 ServletOutputStream out = resp.getOutputStream();
                 String body = req.getReader().lines().collect(Collectors.joining());
-                System.out.println(body);
                 try {
                     UserRegDto payload = JsonHelper.fromJson(body, UserRegDto.class)
                             .orElseThrow(BadRequest::new);

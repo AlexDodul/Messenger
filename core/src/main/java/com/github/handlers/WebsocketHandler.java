@@ -6,7 +6,7 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 
-@ServerEndpoint(value = "/chat")
+@ServerEndpoint(value = "/user/chat")
 public class WebsocketHandler {
 
     @OnOpen
@@ -15,8 +15,8 @@ public class WebsocketHandler {
     }
 
     @OnMessage
-    public void onMessage(Session session) throws IOException {
-        System.out.println();
+    public void onMessage(Session session, String payload) throws IOException {
+        System.out.println(payload);
+        session.getBasicRemote().sendText(payload);
     }
-
 }

@@ -418,7 +418,7 @@
           function ClickOn() {
               const username = document.getElementById('username').value;
               const password = document.getElementById('password').value;
-              axios.post('http://localhost:8080/', {
+              axios.post('http://localhost:8080/users/auth', {
                   username: username,
                   password: password,
 

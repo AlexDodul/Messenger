@@ -8,7 +8,6 @@ import com.github.utils.JsonHelper;
 import com.github.utils.TokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.websocket.OnMessage;
 import javax.websocket.Session;
 
@@ -30,14 +29,24 @@ public class WebsocketHandler {
         try {
             Envelope envelope = JsonHelper.fromJson(payload, Envelope.class).orElseThrow();
             //TODO;: replace switch by Map (key - instances)
+            Token result;
+            String login;
             switch (envelope.getTopic()) {
                 case auth:
-                    Token result = TokenProvider.decode(envelope.getPayload());
-                    String login = result.getLogin();
+                    result = TokenProvider.decode(envelope.getPayload());
+                    login = result.getLogin();
                     websocketConnectionPool.addSession(login, session);
+                    broker.broadcast(websocketConnectionPool.getSessions(), envelope);
                     break;
                 case messages:
                     broker.broadcast(websocketConnectionPool.getSessions(), envelope);
+                    break;
+                case disconnect:
+                    broker.broadcast(websocketConnectionPool.getSessions(), envelope);
+                    result = TokenProvider.decode(envelope.getPayload());
+                    login = result.getLogin();
+                    websocketConnectionPool.removeSession(login);
+                    websocketConnectionPool.getSession(login).close();
                     break;
             }
         } catch (Throwable e) {

@@ -19,6 +19,7 @@ public class WebsocketConnectionPool {
     public List<Session> getSessions() {
         return new ArrayList<>(sessions.values());
     }
+
     public Session getSession(String login) {
         return this.sessions.get(login);
     }

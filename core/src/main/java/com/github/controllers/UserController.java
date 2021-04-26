@@ -5,7 +5,7 @@ import com.github.dto.UserRegDto;
 import com.github.entity.User;
 import com.github.exceptions.KeyGenerationException;
 import com.github.payload.Token;
-import com.github.service.IUserService;
+import com.github.service.user.IUserService;
 import com.github.utils.TokenProvider;
 
 import java.security.KeyPair;

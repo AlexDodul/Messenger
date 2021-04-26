@@ -1,4 +1,4 @@
-package com.github.service;
+package com.github.service.user;
 
 import com.github.dto.UserRegDto;
 import com.github.entity.User;

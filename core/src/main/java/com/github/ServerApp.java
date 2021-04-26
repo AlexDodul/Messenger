@@ -11,5 +11,4 @@ public class ServerApp {
         ServerRunner tomcat = ServerConfig.tomcat();
         tomcat.run();
     }
-
 }

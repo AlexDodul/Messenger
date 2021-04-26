@@ -34,7 +34,7 @@ public class ServerConfig {
                 (ServerContainer) ctx.getServletContext().getAttribute(ServerContainer.class.getName());
         try {
             serverContainer.addEndpoint(
-                    ServerEndpointConfig.Builder.create(WebsocketHandler.class, "/echo")
+                    ServerEndpointConfig.Builder.create(WebsocketHandler.class, "/chat")
                     .configurator(new ServerEndpointConfig.Configurator() {
                               @Override
                               public <T> T getEndpointInstance(Class<T> clazz) {
@@ -47,6 +47,4 @@ public class ServerConfig {
             e.printStackTrace();
         }
     };
-
-
 }

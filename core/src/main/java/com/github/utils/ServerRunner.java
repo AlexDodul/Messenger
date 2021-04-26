@@ -1,15 +1,11 @@
 package com.github.utils;
 
-import com.github.handlers.WebsocketHandler;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.websocket.DeploymentException;
-import javax.websocket.server.ServerContainer;
-import javax.websocket.server.ServerEndpointConfig;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -38,5 +34,4 @@ public class ServerRunner {
             log.warn("Enter: {}", e.getMessage());
         }
     }
-
 }

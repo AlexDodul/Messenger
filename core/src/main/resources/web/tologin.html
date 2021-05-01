@@ -404,7 +404,7 @@
 								</p>
                                 <p class="change_link">
 									Not with us yet?
-									<a href="/reg" class="to_register">Register now</a>
+									<a href="/users/reg" class="to_register">Register now</a>
 								</p>
                             </form>
                         </div>
@@ -419,7 +419,7 @@
               const username = document.getElementById('username').value;
               const password = document.getElementById('password').value;
               axios.post('http://localhost:8080/users/auth', {
-                  username: username,
+                  login: username,
                   password: password,
 
               })

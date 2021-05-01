@@ -27,6 +27,7 @@ public class WebsocketHandler {
     @OnMessage
     public void messages(Session session, String payload) {
         try {
+            System.out.println(payload);
             Envelope envelope = JsonHelper.fromJson(payload, Envelope.class).orElseThrow();
             //TODO;: replace switch by Map (key - instances)
             Token result;
@@ -40,6 +41,7 @@ public class WebsocketHandler {
                     break;
                 case messages:
                     broker.broadcast(websocketConnectionPool.getSessions(), envelope);
+                    broker.send(session,envelope);
                     break;
                 case disconnect:
                     broker.broadcast(websocketConnectionPool.getSessions(), envelope);

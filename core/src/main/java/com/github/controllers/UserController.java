@@ -37,8 +37,7 @@ public class UserController implements IUserController {
                 user.getFirstName(),
                 user.getLastName(),
                 new Date(System.currentTimeMillis() + 1800000),
-                new Date(),
-                keyPair.getPublic()
+                new Date()
         );
         return TokenProvider.encode(token, keyPair.getPrivate());
         } catch (NoSuchAlgorithmException e) {

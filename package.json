@@ -1,6 +1,4 @@
 {
-  "name": "server-node",
-  "version": "1.0.0",
   "dependencies": {
     "ws": "^7.4.5"
   }

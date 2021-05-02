@@ -107,7 +107,9 @@ msg.addEventListener('keydown', event => {
 socket.onmessage = function (event) {
     let message = JSON.parse(event.data);
     if (message){
-        writeLine(message);
+        let payload = JSON.parse(message.payload);
+        if (payload && payload.text){
+            writeLine(payload.text);
+        }
     }
-
 };

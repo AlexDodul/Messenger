@@ -67,9 +67,7 @@ public class UsersHandler extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-
         String url = req.getRequestURI();
-
         if (url.equals("/users/auth")) {
             try {
                 ServletOutputStream out = resp.getOutputStream();
@@ -117,6 +115,5 @@ public class UsersHandler extends HttpServlet {
         } else {
             resp.setStatus(404);
         }
-
     }
 }

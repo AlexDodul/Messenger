@@ -1,7 +1,7 @@
 package com.github.proxy;
 
-import com.github.service.IUserService;
-import com.github.service.UserService;
+import com.github.service.user.IUserService;
+import com.github.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.lang.reflect.InvocationHandler;

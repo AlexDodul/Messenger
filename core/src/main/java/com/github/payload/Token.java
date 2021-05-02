@@ -17,19 +17,19 @@ public class Token implements Serializable {
 
     private Date createdAt;
 
-    private PublicKey publicKey;
+//    private PublicKey publicKey;
 
     public Token() {
 
     }
 
-    public Token(String login, String firstName, String lastName, Date expireIn, Date createdAt, PublicKey publicKey) {
+    public Token(String login, String firstName, String lastName, Date expireIn, Date createdAt) {
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
         this.expireIn = expireIn;
         this.createdAt = createdAt;
-        this.publicKey = publicKey;
+//        this.publicKey = publicKey;
     }
 
     public String getLogin() {
@@ -71,14 +71,14 @@ public class Token implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-
-    public PublicKey getPublicKey() {
-        return publicKey;
-    }
-
-    public void setPublicKey(PublicKey publicKey) {
-        this.publicKey = publicKey;
-    }
+//
+//    public PublicKey getPublicKey() {
+//        return publicKey;
+//    }
+//
+//    public void setPublicKey(PublicKey publicKey) {
+//        this.publicKey = publicKey;
+//    }
 
     @Override
     public boolean equals(Object o) {

@@ -9,8 +9,8 @@ import com.github.network.WebsocketConnectionPool;
 import com.github.proxy.UserServiceProxy;
 import com.github.repository.user.IUserRepository;
 import com.github.repository.user.UserRepository;
-import com.github.service.IUserService;
-import com.github.service.UserService;
+import com.github.service.user.IUserService;
+import com.github.service.user.UserService;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;

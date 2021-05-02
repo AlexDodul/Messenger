@@ -5,10 +5,10 @@ import com.github.payload.Envelope;
 import com.github.utils.JsonHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.websocket.Session;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Future;
 
 public class Broker {
 
@@ -18,16 +18,17 @@ public class Broker {
         String str = JsonHelper.toJson(payload).orElseThrow();
 
         sessions.forEach(session -> {
-            try {
-                session.getBasicRemote().sendText(str);
-            } catch (IOException e) {
-                log.warn("Enter: {}", e.getMessage());
-            }
+            Future<Void> deliveryTracker = session.getAsyncRemote().sendText(str);
+            deliveryTracker.isDone();
         });
     }
 
     public void send(Session session, Envelope payload) {
-        //TODO: This method must send to the single session
+        try {
+            session.getBasicRemote().sendText(JsonHelper.toJson(payload).orElseThrow(IOException::new));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

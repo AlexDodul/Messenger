@@ -5,7 +5,7 @@ import com.github.dto.UserRegDto;
 import com.github.entity.User;
 import com.github.exceptions.KeyGenerationException;
 import com.github.payload.Token;
-import com.github.service.IUserService;
+import com.github.service.user.IUserService;
 import com.github.utils.TokenProvider;
 
 import java.security.KeyPair;
@@ -37,8 +37,7 @@ public class UserController implements IUserController {
                 user.getFirstName(),
                 user.getLastName(),
                 new Date(System.currentTimeMillis() + 1800000),
-                new Date(),
-                keyPair.getPublic()
+                new Date()
         );
         return TokenProvider.encode(token, keyPair.getPrivate());
         } catch (NoSuchAlgorithmException e) {

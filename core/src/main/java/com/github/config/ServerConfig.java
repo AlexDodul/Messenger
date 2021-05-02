@@ -3,7 +3,6 @@ package com.github.config;
 import com.github.handlers.WebsocketHandler;
 import com.github.utils.ServerRunner;
 import org.apache.catalina.Context;
-import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
 
 import javax.servlet.ServletException;

@@ -49,10 +49,12 @@ const doGet = function (req, res) {
 const doPost = function (req, res) {
     switch (req.url) {
         case  '/reg' :
-            let body = JSON.parse(req.body);
+            let body = req.body;
+            console.log(req.body);
             axios.post('http://localhost:8080/users/reg', {
                 firstName: body.firstName,
                 lastName: body.lastName,
+                nickname: body.nickname,
                 login: body.login,
                 password: body.password,
                 passwordConfirm: body.passwordConfirm,
@@ -79,6 +81,11 @@ const server = http.createServer((req, res) => {
         case  'GET' :
             doGet(req, res);
             break;
+        case 'POST' :
+            doPost(req,res);
+            break;
+        default: res.writeHead(404);
+            res.end();
     }
 });
 

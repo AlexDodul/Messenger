@@ -22,7 +22,7 @@
                                     <input id="lastname" name="lastname" required="required" type="text" placeholder="Depp" />
                                 </p>
                                 <p>
-                                    <label for="nickname" class="fname">Your nickname</label>
+                                    <label for="nickname" class="nname">Your nickname</label>
                                     <input id="nickname" name="nickname" required="required" type="text" placeholder="Nickname" />
                                 </p>
                                 <p> 
@@ -91,30 +91,24 @@
                 const passwordConfirm = document.getElementById('passwordConfirm').value;
                 const email = document.getElementById('email').value;
                 const phone = document.getElementById('phone').value;
-                let data = {
-                    firstName: firstName,
-                    lastName: lastName,
-                    nickname: nickname,
-                    login: login,
-                    password: password,
-                    passwordConfirm: passwordConfirm,
-                    email: email,
-                    phone: phone
-                };
                 axios.post(
                     'http://localhost:8000/reg',
-                    data,
                     {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
+                        firstName: firstName,
+                        lastName: lastName,
+                        nickname: nickname,
+                        login: login,
+                        password: password,
+                        passwordConfirm: passwordConfirm,
+                        email: email,
+                        phone: phone,
                     }
                 )
                     .then(function (response) {
-                        //console.log(response);
+                        console.log(response);
                     })
                     .catch(function (error) {
-                        //console.log(error);
+                        console.log(error);
                     });
             }
         </script>

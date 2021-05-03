@@ -48,40 +48,45 @@ const doGet = function (req, res) {
 }
 
 const doPost = function (req, res) {
-    switch (req.url) {
-        case  '/reg' :
-            console.log(req.data);
-            const headers = {
-                'Content-type':'application/json'
-            };
-            axios({
-                    method: 'post',
-                    url: 'http://localhost:8080/users/reg',
-                    data: req.data,
-                    headers: headers
-                })
-                .then(function (response) {
-                    //console.log(response);
-                })
-                .catch(function (error) {
-                    //console.log(error);
-                });
-            break;
-        case  '/auth' :
-            break;
-        default:
-            res.writeHead(404);
-            res.end();
-    }
+    var body = ''
+    req.on('data', function(data) {
+        body += data
+        console.log('Partial body: ' + body)
+    });
+    req.on('end', function() {
+        console.log('Body: ' + body);
+        const data = JSON.parse(body);
+        switch (req.url) {
+            case  '/reg' :
+                res.end();
+                axios.post(
+                    'http://localhost:8080/users/reg',
+                    body,
+                    {headers: {"Content-Type": "text/plain"}}
+                )
+                    .then(function (response) {
+                        //console.log(response);
+                    })
+                    .catch(function (error) {
+                        //console.log(error);
+                    });
+                break;
+            case  '/auth' :
+                break;
+            default:
+                res.writeHead(404);
+                res.end();
+        }
+    });
 }
 
 const server = http.createServer((req, res) => {
+
     switch (req.method) {
         case  'GET' :
             doGet(req, res);
             break;
         case 'POST' :
-            console.log(req);
             doPost(req,res);
             break;
         default: res.writeHead(404);

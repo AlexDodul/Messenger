@@ -42,18 +42,46 @@ public class UsersHandler extends HttpServlet {
         try {
             String url = req.getRequestURI();
             writer = resp.getWriter();
-            if (url.equals("/users/auth")) {
-                resp.setContentType("text/html");
-                String html = Files.readString(Path.of(System.getProperty("user.dir") + "/core/src/main/resources/web/tologin.html"), StandardCharsets.US_ASCII);
-                resp.setContentLength(html.length());
-                writer.write(html);
-            } else if (url.equals("/users/reg")) {
-                resp.setContentType("text/html");
-                String html = Files.readString(Path.of(System.getProperty("user.dir") + "/core/src/main/resources/web/toregister.html"), StandardCharsets.US_ASCII);
-                resp.setContentLength(html.length());
-                writer.write(html);
-            } else {
-                resp.setStatus(404);
+            String buffer;
+            switch(url) {
+                case "/users/auth":
+                    resp.setContentType("text/html");
+                    buffer = Files.readString(Path.of(System.getProperty("user.dir") + "/core/src/main/resources/web/tologin.html"), StandardCharsets.US_ASCII);
+                    resp.setContentLength(buffer.length());
+                    writer.write(buffer);
+                    break;
+                case "/users/reg":
+                    resp.setContentType("text/html");
+                    buffer = Files.readString(Path.of(System.getProperty("user.dir") + "/core/src/main/resources/web/toregister.html"), StandardCharsets.US_ASCII);
+                    resp.setContentLength(buffer.length());
+                    writer.write(buffer);
+                    break;
+                case "/users/style":
+                    resp.setContentType("text/css");
+                    buffer = Files.readString(Path.of(System.getProperty("user.dir") + "/core/src/main/resources/web/style.css"), StandardCharsets.US_ASCII);
+                    resp.setContentLength(buffer.length());
+                    writer.write(buffer);
+                    break;
+                case "/users/chat":
+                    resp.setContentType("text/html");
+                    buffer = Files.readString(Path.of(System.getProperty("user.dir") + "/core/src/main/resources/web/chat.html"), StandardCharsets.US_ASCII);
+                    resp.setContentLength(buffer.length());
+                    writer.write(buffer);
+                    break;
+                case "/users/chat/style":
+                    resp.setContentType("text/css");
+                    buffer = Files.readString(Path.of(System.getProperty("user.dir") + "/core/src/main/resources/web/chat.css"), StandardCharsets.US_ASCII);
+                    resp.setContentLength(buffer.length());
+                    writer.write(buffer);
+                    break;
+                case "/users/chat/script":
+                    resp.setContentType("text/javascript");
+                    buffer = Files.readString(Path.of(System.getProperty("user.dir") + "/core/src/main/resources/web/chat.js"), StandardCharsets.US_ASCII);
+                    resp.setContentLength(buffer.length());
+                    writer.write(buffer);
+                    break;
+                default:
+                    resp.setStatus(404);
             }
         } catch (IOException e){
             resp.setStatus(500);
@@ -68,52 +96,55 @@ public class UsersHandler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String url = req.getRequestURI();
-        if (url.equals("/users/auth")) {
-            try {
-                ServletOutputStream out = resp.getOutputStream();
-                String body = req.getReader().lines().collect(Collectors.joining());
-                UserAuthDto payload = JsonHelper.fromJson(body, UserAuthDto.class)
-                        .orElseThrow(BadRequest::new);
-                String result = this.userController.authorize(payload);
-                resp.setContentType("application/json");
-                resp.setStatus(HttpServletResponse.SC_ACCEPTED);
-                out.write(result.getBytes());
-                out.flush();
-                out.close();
-            } catch (DatabaseException | IOException e) {
-                resp.setStatus(500);
-            } catch (BadRequest e) {
-                resp.setStatus(400);
-            } catch (WrongLoginException | WrongPasswordException e) {
-                resp.setStatus(401);
-            }
-        } else if (url.equals("/users/reg")) {
-            try {
-                ServletOutputStream out = resp.getOutputStream();
-                String body = req.getReader().lines().collect(Collectors.joining());
+        switch(url){
+            case "/users/auth":
                 try {
-                    UserRegDto payload = JsonHelper.fromJson(body, UserRegDto.class)
+                    ServletOutputStream out = resp.getOutputStream();
+                    String body = req.getReader().lines().collect(Collectors.joining());
+                    UserAuthDto payload = JsonHelper.fromJson(body, UserAuthDto.class)
                             .orElseThrow(BadRequest::new);
-                    this.userController.register(payload);
+                    String result = this.userController.authorize(payload);
+                    resp.setContentType("application/json");
                     resp.setStatus(HttpServletResponse.SC_ACCEPTED);
-                } catch (DatabaseException | KeyGenerationException e) {
+                    out.write(result.getBytes());
+                    out.flush();
+                    out.close();
+                } catch (DatabaseException | IOException e) {
                     resp.setStatus(500);
                 } catch (BadRequest e) {
                     resp.setStatus(400);
-                } catch (UserInsertException e) {
-                    resp.setStatus(409);
+                } catch (WrongLoginException | WrongPasswordException e) {
+                    resp.setStatus(401);
                 }
-                out.flush();
-                out.close();
-            } catch (DatabaseException | IOException e) {
-                resp.setStatus(500);
-            } catch (BadRequest e) {
-                resp.setStatus(400);
-            } catch (WrongLoginException | WrongPasswordException e) {
-                resp.setStatus(401);
-            }
-        } else {
-            resp.setStatus(404);
+                break;
+            case "/users/reg":
+                try {
+                    ServletOutputStream out = resp.getOutputStream();
+                    String body = req.getReader().lines().collect(Collectors.joining());
+                    try {
+                        UserRegDto payload = JsonHelper.fromJson(body, UserRegDto.class)
+                                .orElseThrow(BadRequest::new);
+                        this.userController.register(payload);
+                        resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+                    } catch (DatabaseException | KeyGenerationException e) {
+                        resp.setStatus(500);
+                    } catch (BadRequest e) {
+                        resp.setStatus(400);
+                    } catch (UserInsertException e) {
+                        resp.setStatus(409);
+                    }
+                    out.flush();
+                    out.close();
+                } catch (DatabaseException | IOException e) {
+                    resp.setStatus(500);
+                } catch (BadRequest e) {
+                    resp.setStatus(400);
+                } catch (WrongLoginException | WrongPasswordException e) {
+                    resp.setStatus(401);
+                }
+                break;
+            default:
+                resp.setStatus(404);
         }
     }
 }

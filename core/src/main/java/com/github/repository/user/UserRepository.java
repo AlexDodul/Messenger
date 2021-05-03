@@ -25,8 +25,8 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public Collection<User> findAll() {
-        String sql = "select * from " + UserTable.tableName;
+    public Collection<User> findAll(String tableName) {
+        String sql = "select * from " + tableName;
         try {
             return customJdbcTemplate.findAll(
                     sql,
@@ -38,9 +38,9 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public User findAuth(UserAuthDto userAuthDto) {
+    public User findAuth(UserAuthDto userAuthDto, String tableName) {
         String sql = "select * from "
-                + UserTable.tableName + " where "
+                + tableName + " where "
                 + UserTable.login + " = ?";
         try {
             User result = customJdbcTemplate.findBy(
@@ -61,9 +61,9 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public User findReg(UserRegDto userRegDto) {
+    public User findReg(UserRegDto userRegDto, String tableName) {
         String sql = "select * from "
-                + UserTable.tableName + " where "
+                + tableName + " where "
                 + UserTable.login + " = ? and "
                 + UserTable.email + " = ? and "
                 + UserTable.phone + " = ?";
@@ -83,21 +83,23 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public User insert(UserRegDto userRegDto) {
+    public User insert(UserRegDto userRegDto, String tableName) {
         String sql = "insert into "
-                + UserTable.tableName + " ("
+                + tableName + " ("
                 + UserTable.firstName + ", "
                 + UserTable.lastName + ", "
+                + UserTable.nickname + ", "
                 + UserTable.login + ", "
                 + UserTable.email + ", "
                 + UserTable.phone + ", "
                 + UserTable.password
-                + ") values (?, ?, ?, ?, ?, ?)";
+                + ") values (?, ?, ?, ?, ?, ?, ?)";
         try {
             return customJdbcTemplate.insert(sql,
                     UserRowMapper.getRowMapper(),
                     userRegDto.getFirstName(),
                     userRegDto.getLastName(),
+                    userRegDto.getNickname(),
                     userRegDto.getLogin(),
                     userRegDto.getEmail(),
                     userRegDto.getPhone(),
@@ -109,11 +111,12 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public User update(User user) {
+    public User update(User user, String tableName) {
         String sql = "update "
-                + UserTable.tableName + " set "
+                + tableName + " set "
                 + UserTable.firstName + " = ?, "
                 + UserTable.lastName + " = ?, "
+                + UserTable.nickname + " = ?, "
                 + UserTable.login + " = ?, "
                 + UserTable.email + " = ?, "
                 + UserTable.phone + " = ?, "
@@ -125,6 +128,7 @@ public class UserRepository implements IUserRepository{
                     UserRowMapper.getRowMapper(),
                     user.getFirstName(),
                     user.getLastName(),
+                    user.getNickname(),
                     user.getLogin(),
                     user.getEmail(),
                     user.getPhone(),
@@ -137,9 +141,9 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public void delete(User user) {
+    public void delete(User user, String tableName) {
         String sql = "delete from "
-                + UserTable.tableName + " where "
+                + tableName + " where "
                 + UserTable.id + " = ?";
         try {
             customJdbcTemplate.delete(sql,
@@ -150,8 +154,8 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public void deleteAll() {
-        String sql = "truncate " + UserTable.tableName;
+    public void deleteAll(String tableName) {
+        String sql = "truncate " + tableName;
         try {
             customJdbcTemplate.deleteAll(sql);
         } catch (CustomSQLException e) {

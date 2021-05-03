@@ -19,6 +19,7 @@ public class UserServiceTestMock {
             "Vasya",
             "Pupkin",
             "VasyaKrut",
+            "VasyaKrut",
             "12345",
             "12345",
             "vasya.krut@gmail.com",
@@ -29,6 +30,7 @@ public class UserServiceTestMock {
             "Vasya",
             "Pupkin",
             "VasyaNeKrut",
+            "VasyaKrut",
             "54321",
             "54321",
             "vasya.krut@gmail.com",
@@ -39,6 +41,7 @@ public class UserServiceTestMock {
             "Petya",
             "Razboynik",
             "Petro",
+            "VasyaKrut",
             "12345",
             "12345",
             "petro.razboynik@gmail.com",
@@ -49,6 +52,7 @@ public class UserServiceTestMock {
             "Petro",
             "Dobryi",
             "Petro",
+            "VasyaKrut",
             "12345",
             "12345",
             "petro.dobryi@gmail.com",
@@ -56,7 +60,7 @@ public class UserServiceTestMock {
     );
 
     static final UserRegDto nullUserReg = new UserRegDto(
-            null, null, null, null, null, null, null
+            null, null, null, null, null, null, null, null
     );
 
     static final UserAuthDto firstUserAuth = new UserAuthDto(
@@ -72,9 +76,10 @@ public class UserServiceTestMock {
     );
 
     static final User notExistingUser = new User(
-            -100,
+            -100L,
             "AAAA",
             "BBBB",
+            "CCCC",
             "asd",
             "qwerty",
             "pass",

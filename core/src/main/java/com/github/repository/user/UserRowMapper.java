@@ -10,6 +10,7 @@ public class UserRowMapper {
                 resultSet.getLong("id"),
                 resultSet.getString("first_name"),
                 resultSet.getString("last_name"),
+                resultSet.getString("nickname"),
                 resultSet.getString("email"),
                 resultSet.getString("login"),
                 resultSet.getString("password"),

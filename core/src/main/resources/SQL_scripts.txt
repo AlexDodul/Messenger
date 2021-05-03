@@ -1,0 +1,48 @@
+
+======================================
+=============Message==================
+======================================
+
+-- auto-generated definition
+create table message
+(
+    id      serial not null
+        constraint message_pk
+            primary key,
+    payload text   not null
+);
+
+alter table message
+    owner to john;
+
+
+=======================================
+===============User====================
+=======================================
+
+-- auto-generated definition
+create table "user"
+(
+    id         bigserial not null
+        constraint user_pk
+            primary key,
+    first_name text,
+    last_name  text,
+    email      text      not null,
+    login      text      not null,
+    password   text      not null,
+    phone      text,
+    nickname   text      not null
+);
+
+alter table "user"
+    owner to john;
+
+create unique index user_email_uindex
+    on "user" (email);
+
+create unique index user_login_uindex
+    on "user" (login);
+
+create unique index user_nickname_uindex
+    on "user" (nickname);

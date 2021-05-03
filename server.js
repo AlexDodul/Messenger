@@ -3,6 +3,7 @@
 const fs = require('fs');
 const http = require('http');
 const WebSocket = require('ws');
+const axios = require("axios");
 const index = fs.readFileSync('chat/chat.html', 'utf8');
 const css = fs.readFileSync('chat/chat.css', 'utf8');
 const js = fs.readFileSync('chat/chat.js', 'utf8');
@@ -49,23 +50,21 @@ const doGet = function (req, res) {
 const doPost = function (req, res) {
     switch (req.url) {
         case  '/reg' :
-            let body = req.body;
-            console.log(req.body);
-            axios.post('http://localhost:8080/users/reg', {
-                firstName: body.firstName,
-                lastName: body.lastName,
-                nickname: body.nickname,
-                login: body.login,
-                password: body.password,
-                passwordConfirm: body.passwordConfirm,
-                email: body.email,
-                phone: body.phone
-            })
+            console.log(req.data);
+            const headers = {
+                'Content-type':'application/json'
+            };
+            axios({
+                    method: 'post',
+                    url: 'http://localhost:8080/users/reg',
+                    data: req.data,
+                    headers: headers
+                })
                 .then(function (response) {
-                    console.log(response);
+                    //console.log(response);
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    //console.log(error);
                 });
             break;
         case  '/auth' :
@@ -82,6 +81,7 @@ const server = http.createServer((req, res) => {
             doGet(req, res);
             break;
         case 'POST' :
+            console.log(req);
             doPost(req,res);
             break;
         default: res.writeHead(404);

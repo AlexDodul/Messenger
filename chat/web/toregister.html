@@ -91,7 +91,7 @@
                 const passwordConfirm = document.getElementById('passwordConfirm').value;
                 const email = document.getElementById('email').value;
                 const phone = document.getElementById('phone').value;
-                axios.post('http://localhost:8000/reg', {
+                let data = {
                     firstName: firstName,
                     lastName: lastName,
                     nickname: nickname,
@@ -100,12 +100,21 @@
                     passwordConfirm: passwordConfirm,
                     email: email,
                     phone: phone
-                })
+                };
+                axios.post(
+                    'http://localhost:8000/reg',
+                    data,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                )
                     .then(function (response) {
-                        console.log(response);
+                        //console.log(response);
                     })
                     .catch(function (error) {
-                        console.log(error);
+                        //console.log(error);
                     });
             }
         </script>

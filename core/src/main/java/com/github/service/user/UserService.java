@@ -23,7 +23,7 @@ public class UserService implements IUserService{
 
     @Override
     public Collection<User> findAll() {
-        return this.userRepository.findAll();
+        return this.userRepository.findAll("public.user");
     }
 
     @Override
@@ -34,7 +34,7 @@ public class UserService implements IUserService{
                         && user.getPassword().equals(userAuthDto.getPassword())
                 ).findFirst().orElse(null);
         if(Objects.isNull(result)){
-            result = this.userRepository.findAuth(userAuthDto);
+            result = this.userRepository.findAuth(userAuthDto, "public.user");
             this.cache.add(result);
         }
         return result;
@@ -48,7 +48,7 @@ public class UserService implements IUserService{
                                 && user.getPassword().equals(userRegDto.getPassword())
                 ).findFirst().orElse(null);
         if(Objects.isNull(result)){
-            result = this.userRepository.findReg(userRegDto);
+            result = this.userRepository.findReg(userRegDto, "public.user");
             this.cache.add(result);
         }
         return result;
@@ -56,14 +56,14 @@ public class UserService implements IUserService{
 
     @Override
     public User insert(UserRegDto userRegDto) {
-        User result = this.userRepository.insert(userRegDto);
+        User result = this.userRepository.insert(userRegDto, "public.user");
         this.cache.add(result);
         return result;
     }
 
     @Override
     public User update(User user) {
-        User updatedUser = this.userRepository.update(user);
+        User updatedUser = this.userRepository.update(user, "public.user");
         User cacheUser = this.cache.stream()
                 .filter(cacheU -> cacheU.getId().equals(user.getId())).findFirst().orElse(null);
         if(cacheUser == null){
@@ -77,13 +77,13 @@ public class UserService implements IUserService{
 
     @Override
     public void delete(User user) {
-        this.userRepository.delete(user);
+        this.userRepository.delete(user, "public.user");
         this.cache.remove(user);
     }
 
     @Override
     public void deleteAll() {
-        this.userRepository.deleteAll();
+        this.userRepository.deleteAll("public.user");
         this.cache.clear();
     }
 

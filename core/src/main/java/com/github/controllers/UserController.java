@@ -34,10 +34,10 @@ public class UserController implements IUserController {
         keyPair = keyPairGenerator.generateKeyPair();
         Token token = new Token(
                 user.getLogin(),
-                user.getFirstName(),
-                user.getLastName(),
+                user.getNickname(),
                 new Date(System.currentTimeMillis() + 1800000),
-                new Date()
+                new Date(),
+                keyPair.getPublic()
         );
         return TokenProvider.encode(token, keyPair.getPrivate());
         } catch (NoSuchAlgorithmException e) {

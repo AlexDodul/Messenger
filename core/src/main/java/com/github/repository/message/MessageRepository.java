@@ -23,9 +23,9 @@ public class MessageRepository implements IMessageRepository {
     }
 
     @Override
-    public void insert(String payload) {
+    public void insert(String payload, String tableName) {
         String sql = "insert into "
-                + MessageTable.tableName + " ("
+                + tableName + " ("
                 + MessageTable.payload
                 + ") values (?)";
         try {
@@ -38,8 +38,8 @@ public class MessageRepository implements IMessageRepository {
     }
 
     @Override
-    public List<Message> getMessages(int number) {
-        String sql = "select * from " + MessageTable.tableName +
+    public List<Message> getMessages(int number, String tableName) {
+        String sql = "select * from " + tableName +
                 " order by " + MessageTable.id + " desc limit " + number;
         try {
             return new LinkedList<>(customJdbcTemplate.findAll(

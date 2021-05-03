@@ -10,6 +10,8 @@ public class UserRegDto {
 
     private String lastName;
 
+    private String nickname;
+
     private String login;
 
     private String password;
@@ -23,9 +25,10 @@ public class UserRegDto {
     public UserRegDto() {
     }
 
-    public UserRegDto(String firstName, String lastName, String login, String password, String passwordConfirm, String email, String phone) {
+    public UserRegDto(String firstName, String lastName, String nickname, String login, String password, String passwordConfirm, String email, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.nickname = nickname;
         this.login = login;
         this.password = password;
         this.passwordConfirm = passwordConfirm;
@@ -36,6 +39,7 @@ public class UserRegDto {
     public UserRegDto(User user) {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
+        this.nickname = user.getNickname();
         this.login = user.getLogin();
         this.password = user.getPassword();
         this.passwordConfirm = user.getPassword();
@@ -65,6 +69,14 @@ public class UserRegDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getPassword() {
@@ -104,12 +116,11 @@ public class UserRegDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserRegDto that = (UserRegDto) o;
-        return firstName.equals(that.firstName) && lastName.equals(that.lastName) && login.equals(that.login) && password.equals(that.password) && passwordConfirm.equals(that.passwordConfirm) && email.equals(that.email) && phone.equals(that.phone);
+        return firstName.equals(that.firstName) && lastName.equals(that.lastName) && nickname.equals(that.nickname) && login.equals(that.login) && password.equals(that.password) && passwordConfirm.equals(that.passwordConfirm) && email.equals(that.email) && phone.equals(that.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, login, password, passwordConfirm, email, phone);
+        return Objects.hash(firstName, lastName, nickname, login, password, passwordConfirm, email, phone);
     }
-
 }

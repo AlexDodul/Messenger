@@ -8,18 +8,18 @@ import java.util.Collection;
 
 public interface IUserRepository {
 
-    Collection<User> findAll();
+    Collection<User> findAll(String tableName);
 
-    User findAuth(UserAuthDto userAuthDto);
+    User findAuth(UserAuthDto userAuthDto, String tableName);
 
-    User findReg(UserRegDto userRegDto);
+    User findReg(UserRegDto userRegDto, String tableName);
 
-    User insert(UserRegDto userRegDto);
+    User insert(UserRegDto userRegDto, String tableName);
 
-    User update(User user);
+    User update(User user, String tableName);
 
-    void delete(User user);
+    void delete(User user, String tableName);
 
-    void deleteAll();
+    void deleteAll(String tableName);
 
 }

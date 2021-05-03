@@ -6,8 +6,9 @@ const WebSocket = require('ws');
 const index = fs.readFileSync('chat/chat.html', 'utf8');
 const css = fs.readFileSync('chat/chat.css', 'utf8');
 const js = fs.readFileSync('chat/chat.js', 'utf8');
-const registration = fs.readFileSync('chat/web/toregister.html', 'utf8');
+const reg = fs.readFileSync('chat/web/toregister.html', 'utf8');
 const auth = fs.readFileSync('chat/web/tologin.html', 'utf8');
+const cssWeb = fs.readFileSync('chat/web/style.css', 'utf8');
 
 const doGet = function (req, res) {
     switch (req.url) {
@@ -25,12 +26,20 @@ const doGet = function (req, res) {
             break;
         case '/reg' :
             res.writeHead(200);
-            res.end(registration);
+            res.end(reg);
             break;
+        case '/reg/style':
+            res.writeHead(200);
+            res.end(cssWeb);
+            break
         case '/auth' :
             res.writeHead(200);
             res.end(auth);
             break;
+        case '/auth/style':
+            res.writeHead(200);
+            res.end(cssWeb);
+            break
         default:
             res.writeHead(404);
             res.end();

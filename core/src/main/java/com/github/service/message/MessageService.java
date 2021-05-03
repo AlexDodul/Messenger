@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MessageService implements IMessageService {
 
-    int cacheSize;
+    private int cacheSize;
 
     private LinkedList<String> cache;
 
@@ -21,17 +21,12 @@ public class MessageService implements IMessageService {
     }
 
     @Override
-    public List<String> getCache() {
-        return this.cache;
-    }
-
-    @Override
     public void insert(String payload) {
         this.cache.addFirst(payload);
         if(this.cache.size() > cacheSize) {
             this.cache.removeLast();
         }
-        this.messageRepository.insert(payload);
+        this.messageRepository.insert(payload, "public.message");
     }
 
     @Override
@@ -39,7 +34,7 @@ public class MessageService implements IMessageService {
         if(number <= this.cacheSize){
             return this.cache.subList(0, number - 1);
         }
-        List<Message> messages = this.messageRepository.getMessages(number);
+        List<Message> messages = this.messageRepository.getMessages(number, "public.message");
         LinkedList<String> result = new LinkedList<>();
         for(Message message : messages){
             result.addLast(message.getPayload());

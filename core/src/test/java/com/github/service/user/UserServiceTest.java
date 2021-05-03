@@ -118,6 +118,7 @@ public class UserServiceTest {
                     initial.get(i).getId(),
                     updated.get(i).getFirstName(),
                     updated.get(i).getLastName(),
+                    updated.get(i).getNickname(),
                     updated.get(i).getLogin(),
                     updated.get(i).getPassword(),
                     updated.get(i).getEmail(),

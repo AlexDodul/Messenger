@@ -10,6 +10,8 @@ public class User {
 
     private String lastName;
 
+    private String nickname;
+
     private String email;
 
     private String login;
@@ -18,10 +20,14 @@ public class User {
 
     private String phone;
 
-    public User(long id, String firstName, String lastName, String email, String login, String password, String phone) {
+    public User() {
+    }
+
+    public User(Long id, String firstName, String lastName, String nickname, String email, String login, String password, String phone) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.nickname = nickname;
         this.email = email;
         this.login = login;
         this.password = password;
@@ -50,6 +56,18 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getEmail() {
@@ -89,12 +107,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id.equals(user.id) && firstName.equals(user.firstName) && lastName.equals(user.lastName) && email.equals(user.email) && login.equals(user.login) && password.equals(user.password) && phone.equals(user.phone);
+        return id.equals(user.id) && firstName.equals(user.firstName) && lastName.equals(user.lastName) && nickname.equals(user.nickname) && email.equals(user.email) && login.equals(user.login) && password.equals(user.password) && phone.equals(user.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, login, password, phone);
+        return Objects.hash(id, firstName, lastName, nickname, email, login, password, phone);
     }
 
     @Override
@@ -103,6 +121,7 @@ public class User {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", nickname='" + nickname + '\'' +
                 ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +

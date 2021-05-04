@@ -69,7 +69,7 @@ btn.onclick = () => {
     const s = msg.value;
     msg.value = '';
     let payload2 = {
-        nickname: 'nameMI',
+        nickname: 'Tura',
         time: new Date(),
         text: s
     }
@@ -87,7 +87,7 @@ msg.addEventListener('keydown', event => {
         const s = msg.value;
         msg.value = '';
         let payload2 = {
-            nickname: 'nameMI',
+            nickname: 'Tura',
             time: new Date(),
             text: s
         }

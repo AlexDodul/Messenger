@@ -27,7 +27,7 @@
 									<label for="loginkeeping">Remember me</label>
 								</p>
                                 <p class="login button"> 
-                                    <input type="submit" onclick="ClickOn()" value="Sign In" />
+                                    <button type="button" onclick="ClickOn()" value="Sign In" />
 								</p>
                                 <p class="change_link">
 									Not with us yet?
@@ -45,15 +45,23 @@
               const username = document.getElementById('username').value;
               const password = document.getElementById('password').value;
               let data = {
-                  username: username,
+                  login: username,
                   password: password
               };
               axios.post('http://localhost:8000/auth',
                   data
               )
                   .then(response => {
-                      alert('response');
-                      if (response.status === 200) {
+
+                      console.log(response);
+                      if(response.status >= 200 && response.status < 300){
+                          window.location.replace("http://localhost:8000/reg");
+                      } else {
+
+                      }
+
+                      //alert('response');
+                      /*if (response.status >= 200 && response.status < 300) {
                           let token = response.data;
                           axios(
                               {
@@ -65,13 +73,12 @@
                                   data: token
                               }
                           );
-                      }
+                      }*/
                   })
                   .catch(function (error) {
                       console.log(error);
                   });
           }
-
         </script>
     </body>
 </html>

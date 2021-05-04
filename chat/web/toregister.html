@@ -46,7 +46,7 @@
                                     <input id="phone" name="phone" required="required" type="phone" placeholder="For example 0500000000"/>
                                 </p>
                                 <p class="signin button"> 
-									<input type="submit" onclick="clickon()" value="Registration"/>
+									<button type="button" onclick="clickon()" value="Registration"/>
 								</p>
                                 <p class="change_link">  
 									Are you already registered?
@@ -106,7 +106,7 @@
                 )
                     .then(function (response) {
                         console.log(response);
-                        if(response.status === 200){
+                        if(response.status >= 200 && response.status < 300){
                             window.location.replace("http://localhost:8000/auth");
                         } else {
 

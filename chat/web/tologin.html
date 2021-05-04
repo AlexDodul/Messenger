@@ -39,25 +39,38 @@
                 </div>  
             </section>
         </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script>
           function ClickOn() {
               const username = document.getElementById('username').value;
               const password = document.getElementById('password').value;
-              axios.post('http://localhost:8000/auth', {
-                  login: username,
-                  password: password,
-
-              })
-                  .then(function (response) {
-                      console.log(response);
+              let data = {
+                  username: username,
+                  password: password
+              };
+              axios.post('http://localhost:8000/auth',
+                  data
+              )
+                  .then(response => {
+                      alert('response');
+                      if (response.status === 200) {
+                          let token = response.data;
+                          axios(
+                              {
+                                  method: 'GET',
+                                  url: 'http://localhost:8000/chat',
+                                  headers: {
+                                      'Content-type' : 'application/json'
+                                  },
+                                  data: token
+                              }
+                          );
+                      }
                   })
                   .catch(function (error) {
                       console.log(error);
                   });
           }
-
 
         </script>
     </body>

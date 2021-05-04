@@ -106,6 +106,7 @@ public class UsersHandler extends HttpServlet {
                     String result = this.userController.authorize(payload);
                     resp.setContentType("application/json");
                     resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+                    resp.setStatus(200);
                     out.write(result.getBytes());
                     out.flush();
                     out.close();

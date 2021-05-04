@@ -11,11 +11,28 @@ const reg = fs.readFileSync('chat/web/toregister.html', 'utf8');
 const auth = fs.readFileSync('chat/web/tologin.html', 'utf8');
 const cssWeb = fs.readFileSync('chat/web/style.css', 'utf8');
 
+const checkToken = function (token){
+    return true;
+}
+
 const doGet = function (req, res) {
-    switch (req.url) {
+    let url = req.url;
+    if(url.indexOf('?') !== -1) {
+        url = url.substr(0, url.indexOf('?'));
+    }
+    switch (url) {
         case '/chat':
-            res.writeHead(200);
-            res.end(index);
+            console.log('Chat get');
+            var body = ''
+            req.on('data', function(data) {
+                body += data
+            });
+            req.on('end', function() {
+                if(checkToken(body)) {
+                    res.writeHead(200);
+                    res.end(index);
+                }
+            });
             break;
         case '/chat/style':
             res.writeHead(200);
@@ -48,30 +65,51 @@ const doGet = function (req, res) {
 }
 
 const doPost = function (req, res) {
+    console.log('post');
     var body = ''
     req.on('data', function(data) {
         body += data
-        console.log('Partial body: ' + body)
     });
     req.on('end', function() {
-        console.log('Body: ' + body);
-        const data = JSON.parse(body);
-        switch (req.url) {
+        let url = req.url;
+        switch (url) {
             case  '/reg' :
-                res.end();
                 axios.post(
                     'http://localhost:8080/users/reg',
                     body,
                     {headers: {"Content-Type": "text/plain"}}
                 )
                     .then(function (response) {
-                        //console.log(response);
+                        if(response.status === 200){
+                            res.status = 200;
+                            res.end();
+                        } else {
+                            res.status = 200;
+                            res.end();
+                        }
                     })
                     .catch(function (error) {
-                        //console.log(error);
                     });
                 break;
             case  '/auth' :
+                console.log('auth post');
+                axios.post(
+                    'http://localhost:8080/users/auth',
+                    body,
+                    {headers: {"Content-Type": "text/plain"}}
+                )
+                    .then(function (response) {
+                        if(response.status === 200){
+                            res.writeHead(200);
+                            console.log(response.data);
+                            res.end(response.data);
+                        } else {
+                            res = response;
+                            res.end();
+                        }
+                    })
+                    .catch(function (error) {
+                    });
                 break;
             default:
                 res.writeHead(404);
@@ -82,6 +120,7 @@ const doPost = function (req, res) {
 
 const server = http.createServer((req, res) => {
 
+    console.log(req.method + ' ' + req.url);
     switch (req.method) {
         case  'GET' :
             doGet(req, res);

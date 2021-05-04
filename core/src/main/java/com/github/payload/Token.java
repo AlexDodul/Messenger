@@ -1,7 +1,6 @@
 package com.github.payload;
 
 import java.io.Serializable;
-import java.security.PublicKey;
 import java.util.Date;
 
 public class Token implements Serializable {
@@ -14,18 +13,15 @@ public class Token implements Serializable {
 
     private Date createdAt;
 
-    private PublicKey publicKey;
-
     public Token() {
 
     }
 
-    public Token(String login, String nickname, Date expireIn, Date createdAt, PublicKey publicKey) {
+    public Token(String login, String nickname, Date expireIn, Date createdAt) {
         this.login = login;
         this.nickname = nickname;
         this.expireIn = expireIn;
         this.createdAt = createdAt;
-        this.publicKey = publicKey;
     }
 
     public String getLogin() {
@@ -58,14 +54,6 @@ public class Token implements Serializable {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public PublicKey getPublicKey() {
-        return publicKey;
-    }
-
-    public void setPublicKey(PublicKey publicKey) {
-        this.publicKey = publicKey;
     }
 
 }

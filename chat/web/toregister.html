@@ -46,7 +46,7 @@
                                     <input id="phone" name="phone" required="required" type="phone" placeholder="For example 0500000000"/>
                                 </p>
                                 <p class="signin button"> 
-									<button type="button" onclick="clickon()" value="Registration"/>
+                                    <button type="button" onclick="clickon()" value="Registration">Registration</button>
 								</p>
                                 <p class="change_link">  
 									Are you already registered?
@@ -91,6 +91,7 @@
                 const passwordConfirm = document.getElementById('passwordConfirm').value;
                 const email = document.getElementById('email').value;
                 const phone = document.getElementById('phone').value;
+
                 axios.post(
                     'http://localhost:8000/reg',
                     {
@@ -106,7 +107,7 @@
                 )
                     .then(function (response) {
                         console.log(response);
-                        if(response.status >= 200 && response.status < 300){
+                        if(response.status === 200){
                             window.location.replace("http://localhost:8000/auth");
                         } else {
 

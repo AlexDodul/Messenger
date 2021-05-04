@@ -100,9 +100,12 @@ const doPost = function (req, res) {
                 )
                     .then(function (response) {
                         if(response.status === 200){
-                            res.writeHead(200);
+                            /*res.writeHead(200);
                             console.log(response.data);
-                            res.end(response.data);
+                            res.end(response.data);*/
+                            res.status = 200;
+                            console.log(response.data);
+                            res.end();
                         } else {
                             res = response;
                             res.end();

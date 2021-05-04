@@ -371,3 +371,8 @@ body {
 #login{
 	margin-top: 150px;
 }
+.button button{
+	padding: 10px 20px;
+	margin-bottom: 15px;
+	margin-top: 10px;
+}

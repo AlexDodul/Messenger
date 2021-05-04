@@ -5,8 +5,6 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,
 }
 
 html,body {
-	background-image:url(https://images.squarespace-cdn.com/content/v1/5b0b11c7f407b4a4414d3e37/1527526825359-WDGF0KX1J1FIAEQ9FSQK/ke17ZwdGBToddI8pDm48kG5yyC2fuLhqa7n3HcFTmct7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UWbV85Z51K23BXxsZ-UJxzbdX7t6UqdsWKDLZ4NLNMu9uqWRKOCd3Esfzua9QhbWww/%282%29+60x60cm+Space+Art+Series+2.jpg?format=1500w);;
-	background-position: top;
 	margin:0;
 	padding:0;
 	height: 100%;
@@ -60,13 +58,12 @@ a.hiddenanchor{
 }
 
 #wrapper h1{
-	font-size: 48px;
+	font-size: 38px;
 	color: rgb(6, 106, 117);
-	padding: 2px 0 10px 0;
 	font-family: 'FranchiseRegular','Arial Narrow',Arial,sans-serif;
 	font-weight: bold;
 	text-align: center;
-	padding-bottom: 30px;
+	padding-bottom: 10px;
 }
 /** For the moment only webkit supports the background-clip:text; */
 #wrapper h1{
@@ -94,7 +91,7 @@ a.hiddenanchor{
 }
 
 #wrapper p{
-	margin-bottom:15px;
+	margin-bottom:5px;
 }
 #wrapper p:first-child{
 	margin: 0px;
@@ -306,7 +303,7 @@ p.change_link{
 	top: 0px;
 	width: 88%;	
 	padding: 18px 6% 60px 6%;
-	margin: 50px 0 35px 0;
+	margin: 10px 0 35px 0;
 	background: rgb(247, 247, 247);
 	border: 1px solid rgba(147, 184, 189,0.8);
 	-webkit-box-shadow: 0pt 2px 5px rgba(105, 108, 109,  0.7),	0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
@@ -368,5 +365,9 @@ p.change_link{
 }
 
 body {
-	background: #fff url(https://images.squarespace-cdn.com/content/v1/5b0b11c7f407b4a4414d3e37/1527526825359-WDGF0KX1J1FIAEQ9FSQK/ke17ZwdGBToddI8pDm48kG5yyC2fuLhqa7n3HcFTmct7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UWbV85Z51K23BXxsZ-UJxzbdX7t6UqdsWKDLZ4NLNMu9uqWRKOCd3Esfzua9QhbWww/%282%29+60x60cm+Space+Art+Series+2.jpg?format=1500w) no-repeat top center;
+	background: #fff url(https://images.squarespace-cdn.com/content/v1/5b0b11c7f407b4a4414d3e37/1527526825359-WDGF0KX1J1FIAEQ9FSQK/ke17ZwdGBToddI8pDm48kG5yyC2fuLhqa7n3HcFTmct7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UWbV85Z51K23BXxsZ-UJxzbdX7t6UqdsWKDLZ4NLNMu9uqWRKOCd3Esfzua9QhbWww/%282%29+60x60cm+Space+Art+Series+2.jpg?format=1500w) repeat top center;
+}
+
+#login{
+	margin-top: 150px;
 }

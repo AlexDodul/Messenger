@@ -11,6 +11,7 @@ import com.github.utils.TokenProvider;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UserController implements IUserController {
@@ -20,6 +21,10 @@ public class UserController implements IUserController {
     public UserController(IUserService userService) {
         this.userService = userService;
     }
+
+    String pattern = "yyyy-MM-dd";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    String date = simpleDateFormat.format(new Date());
 
     @Override
     public String authorize(UserAuthDto userAuthDto) {

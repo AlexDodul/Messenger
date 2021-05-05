@@ -8,6 +8,14 @@ const btn = document.getElementById('btn');
 
 msg.focus();
 
+let payload2 = {
+    login: 'Tura',
+    firstName: 'Vasia',
+    lastName: 'Pupcin',
+    expireIn: new Date(),
+    createdAt: new Date(),
+}
+
 const usersNickName = nickname => {
     const line = document.createElement('li');
     line.innerHTML = `<img src="https://www.meme-arsenal.com/memes/755658588d31fbf527a72b152150e4fa.jpg" alt="">
@@ -46,13 +54,6 @@ const writeLine = text => {
 socket.onopen = () => {
     writeLine('<div class="connect">Connected</div>');
 
-    let payload2 = {
-        login: 'Tura',
-        firstName: 'Vasia',
-        lastName: 'Pupcin',
-        expireIn: new Date(),
-        createdAt: new Date(),
-    }
     usersNickName(payload2.login);
     let envelope = {
         topic: 'auth',
@@ -77,7 +78,6 @@ btn.onclick = () => {
     let envelope = {
         topic: 'messages',
         payload: JSON.stringify(payload2)
-
     };
     socket.send(JSON.stringify(envelope));
 }
@@ -95,7 +95,6 @@ msg.addEventListener('keydown', event => {
         let envelope = {
             topic: 'messages',
             payload: JSON.stringify(payload2)
-
         };
         socket.send(JSON.stringify(envelope));
     }

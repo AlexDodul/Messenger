@@ -100,9 +100,6 @@ const doPost = function (req, res) {
                 )
                     .then(function (response) {
                         if(response.status === 200){
-                            /*res.writeHead(200);
-                            console.log(response.data);
-                            res.end(response.data);*/
                             res.status = 200;
                             console.log(response.data);
                             res.end();
@@ -149,8 +146,6 @@ ws.on('connection', (connection, req) => {
         console.log('Received: ' + message);
         for (const client of ws.clients) {
             if (client.readyState !== WebSocket.OPEN) continue;
-            // if (client === connection) continue;
-            //console.log('before send')
             client.send(message);
         }
     });

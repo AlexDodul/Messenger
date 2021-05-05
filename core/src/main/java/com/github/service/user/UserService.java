@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-public class UserService implements IUserService{
+public class UserService implements IUserService {
 
     private final IUserRepository userRepository;
 
@@ -31,9 +31,9 @@ public class UserService implements IUserService{
         User result = this.cache.stream()
                 .filter(user ->
                         user.getLogin().equals(userAuthDto.getLogin())
-                        && user.getPassword().equals(userAuthDto.getPassword())
+                                && user.getPassword().equals(userAuthDto.getPassword())
                 ).findFirst().orElse(null);
-        if(Objects.isNull(result)){
+        if (Objects.isNull(result)) {
             result = this.userRepository.findAuth(userAuthDto, "public.user");
             this.cache.add(result);
         }
@@ -47,7 +47,7 @@ public class UserService implements IUserService{
                         user.getLogin().equals(userRegDto.getLogin())
                                 && user.getPassword().equals(userRegDto.getPassword())
                 ).findFirst().orElse(null);
-        if(Objects.isNull(result)){
+        if (Objects.isNull(result)) {
             result = this.userRepository.findReg(userRegDto, "public.user");
             this.cache.add(result);
         }
@@ -66,7 +66,7 @@ public class UserService implements IUserService{
         User updatedUser = this.userRepository.update(user, "public.user");
         User cacheUser = this.cache.stream()
                 .filter(cacheU -> cacheU.getId().equals(user.getId())).findFirst().orElse(null);
-        if(cacheUser == null){
+        if (cacheUser == null) {
             this.cache.add(updatedUser);
         } else {
             this.cache.remove(cacheUser);
@@ -86,5 +86,4 @@ public class UserService implements IUserService{
         this.userRepository.deleteAll("public.user");
         this.cache.clear();
     }
-
 }

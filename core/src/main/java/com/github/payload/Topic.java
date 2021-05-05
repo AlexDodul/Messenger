@@ -1,5 +1,5 @@
 package com.github.payload;
 
 public enum Topic {
-    messages,auth,disconnect;
+    messages, auth, disconnect;
 }

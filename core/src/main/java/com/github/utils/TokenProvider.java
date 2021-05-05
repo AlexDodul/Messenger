@@ -30,7 +30,7 @@ public class TokenProvider {
         }
     }
 
-    public static String encode(Token token){
+    public static String encode(Token token) {
         String login = token.getLogin();
         try {
             Cipher cipher = Cipher.getInstance("RSA");
@@ -43,7 +43,7 @@ public class TokenProvider {
         }
     }
 
-    public static Token decode(String str){
+    public static Token decode(String str) {
         Token buffer = JsonHelper.fromJson(str, Token.class).orElseThrow(TokenProviderException::new);
         String login = buffer.getLogin();
         String nickname = buffer.getNickname();
@@ -57,5 +57,4 @@ public class TokenProvider {
             throw new TokenProviderException(e.getMessage());
         }
     }
-
 }

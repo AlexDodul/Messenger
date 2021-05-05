@@ -4,10 +4,11 @@ import com.github.service.user.IUserService;
 import com.github.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-public class UserServiceProxy implements InvocationHandler{
+public class UserServiceProxy implements InvocationHandler {
 
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 

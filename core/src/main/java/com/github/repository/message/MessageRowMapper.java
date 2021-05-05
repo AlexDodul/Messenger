@@ -11,5 +11,4 @@ public class MessageRowMapper {
                 resultSet.getString("payload")
         );
     }
-
 }

@@ -8,7 +8,7 @@ const btn = document.getElementById('btn');
 
 msg.focus();
 
-let payload2 = {
+let payloadToken = {
     login: 'Tura',
     firstName: 'Vasia',
     lastName: 'Pupcin',
@@ -54,10 +54,10 @@ const writeLine = text => {
 socket.onopen = () => {
     writeLine('<div class="connect">Connected</div>');
 
-    usersNickName(payload2.login);
+    usersNickName(payloadToken.login);
     let envelope = {
         topic: 'auth',
-        payload: JSON.stringify(payload2)
+        payload: JSON.stringify(payloadToken)
     };
     socket.send(JSON.stringify(envelope));
 };
@@ -69,7 +69,7 @@ socket.onclose = () => {
 btn.onclick = () => {
     const s = msg.value;
     msg.value = '';
-    let payload2 = {
+    let payloadToken = {
         nickname: 'Tura',
         time: new Date(),
         text: s
@@ -77,7 +77,7 @@ btn.onclick = () => {
 
     let envelope = {
         topic: 'messages',
-        payload: JSON.stringify(payload2)
+        payload: JSON.stringify(payloadToken)
     };
     socket.send(JSON.stringify(envelope));
 }
@@ -86,7 +86,7 @@ msg.addEventListener('keydown', event => {
     if (event.keyCode === CHAR_RETURN) {
         const s = msg.value;
         msg.value = '';
-        let payload2 = {
+        let payloadToken = {
             nickname: 'Tura',
             time: new Date(),
             text: s
@@ -94,7 +94,7 @@ msg.addEventListener('keydown', event => {
 
         let envelope = {
             topic: 'messages',
-            payload: JSON.stringify(payload2)
+            payload: JSON.stringify(payloadToken)
         };
         socket.send(JSON.stringify(envelope));
     }

@@ -25,12 +25,12 @@ public class ServerRunner {
         this.listeners = listeners;
     }
 
-    public void run(){
+    public void run() {
         try {
             this.tomcat.start();
             this.listeners.forEach(lst -> lst.accept(this.ctx));
             this.tomcat.getServer().await();
-        } catch (LifecycleException e){
+        } catch (LifecycleException e) {
             log.warn("Enter: {}", e.getMessage());
         }
     }

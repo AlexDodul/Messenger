@@ -8,6 +8,7 @@ import com.github.utils.JsonHelper;
 import com.github.utils.TokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.websocket.OnMessage;
 import javax.websocket.Session;
 
@@ -29,7 +30,6 @@ public class WebsocketHandler {
         try {
             System.out.println(payload);
             Envelope envelope = JsonHelper.fromJson(payload, Envelope.class).orElseThrow();
-            //TODO;: replace switch by Map (key - instances)
             Token result;
             String login;
             switch (envelope.getTopic()) {
@@ -41,7 +41,7 @@ public class WebsocketHandler {
                     break;
                 case messages:
                     broker.broadcast(websocketConnectionPool.getSessions(), envelope);
-                    broker.send(session,envelope);
+                    broker.send(session, envelope);
                     break;
                 case disconnect:
                     broker.broadcast(websocketConnectionPool.getSessions(), envelope);
@@ -52,7 +52,6 @@ public class WebsocketHandler {
                     break;
             }
         } catch (Throwable e) {
-            //TODO: single send to user about error
             log.warn("Enter {}", e.getMessage());
         }
     }

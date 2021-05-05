@@ -5,6 +5,7 @@ import com.github.payload.Envelope;
 import com.github.utils.JsonHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.websocket.Session;
 import java.io.IOException;
 import java.util.List;
@@ -30,6 +31,5 @@ public class Broker {
             e.printStackTrace();
         }
     }
-
 }
 

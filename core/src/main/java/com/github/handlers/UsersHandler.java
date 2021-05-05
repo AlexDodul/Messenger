@@ -43,7 +43,7 @@ public class UsersHandler extends HttpServlet {
             String url = req.getRequestURI();
             writer = resp.getWriter();
             String buffer;
-            switch(url) {
+            switch (url) {
                 case "/users/auth":
                     resp.setContentType("text/html");
                     buffer = Files.readString(Path.of(System.getProperty("user.dir") + "/core/src/main/resources/web/tologin.html"), StandardCharsets.US_ASCII);
@@ -83,10 +83,10 @@ public class UsersHandler extends HttpServlet {
                 default:
                     resp.setStatus(404);
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             resp.setStatus(500);
         } finally {
-            if(writer != null) {
+            if (writer != null) {
                 writer.flush();
                 writer.close();
             }
@@ -96,7 +96,7 @@ public class UsersHandler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String url = req.getRequestURI();
-        switch(url){
+        switch (url) {
             case "/users/auth":
                 try {
                     ServletOutputStream out = resp.getOutputStream();

@@ -1,6 +1,6 @@
 package com.github.exceptions;
 
-public class UserUpdateException extends RuntimeException{
+public class UserUpdateException extends RuntimeException {
 
     public UserUpdateException() {
     }

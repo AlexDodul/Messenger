@@ -51,5 +51,4 @@ public class UserAuthDto {
     public int hashCode() {
         return Objects.hash(login, password);
     }
-
 }

@@ -50,5 +50,4 @@ public class MessageRepository implements IMessageRepository {
             throw new DatabaseException(e.getMessage());
         }
     }
-
 }

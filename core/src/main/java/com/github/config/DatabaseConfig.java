@@ -7,9 +7,9 @@ import javax.sql.DataSource;
 
 public class DatabaseConfig {
 
-    private static final HikariConfig config = new HikariConfig();//System.getProperty("user.dir") + "/core/src/main/resources/web/tologin.html");
+    private static final HikariConfig config = new HikariConfig();
 
-    static{
+    static {
         config.setJdbcUrl("jdbc:postgresql://localhost:54320/mydb");
         config.setUsername("john");
         config.setPassword("pwd0123456789");

@@ -28,7 +28,7 @@ public class AppConfig {
 
     private static UsersHandler usersHandler = new UsersHandler(getUserController());
 
-    private static WebsocketHandler websocketHandler = new WebsocketHandler(getWebsocketConnectionPool(),getBroker());
+    private static WebsocketHandler websocketHandler = new WebsocketHandler(getWebsocketConnectionPool(), getBroker());
 
     public static IUserRepository getUserRepository() {
         return userRepository;

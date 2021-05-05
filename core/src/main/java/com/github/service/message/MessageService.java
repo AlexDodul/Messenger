@@ -23,7 +23,7 @@ public class MessageService implements IMessageService {
     @Override
     public void insert(String payload) {
         this.cache.addFirst(payload);
-        if(this.cache.size() > cacheSize) {
+        if (this.cache.size() > cacheSize) {
             this.cache.removeLast();
         }
         this.messageRepository.insert(payload, "public.message");
@@ -31,15 +31,14 @@ public class MessageService implements IMessageService {
 
     @Override
     public List<String> getMessages(int number) {
-        if(number <= this.cacheSize){
+        if (number <= this.cacheSize) {
             return this.cache.subList(0, number - 1);
         }
         List<Message> messages = this.messageRepository.getMessages(number, "public.message");
         LinkedList<String> result = new LinkedList<>();
-        for(Message message : messages){
+        for (Message message : messages) {
             result.addLast(message.getPayload());
         }
         return result;
     }
-
 }

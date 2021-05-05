@@ -21,5 +21,4 @@ public interface IUserRepository {
     void delete(User user, String tableName);
 
     void deleteAll(String tableName);
-
 }

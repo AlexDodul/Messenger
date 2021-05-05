@@ -5,7 +5,7 @@ import com.github.micro.orm.CustomRowMapper;
 
 public class UserRowMapper {
 
-    public static CustomRowMapper<User> getRowMapper(){
+    public static CustomRowMapper<User> getRowMapper() {
         return resultSet -> new User(
                 resultSet.getLong("id"),
                 resultSet.getString("first_name"),
@@ -17,5 +17,4 @@ public class UserRowMapper {
                 resultSet.getString("phone")
         );
     }
-
 }

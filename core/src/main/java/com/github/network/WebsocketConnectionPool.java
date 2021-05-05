@@ -4,6 +4,7 @@ import javax.websocket.Session;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
 public class WebsocketConnectionPool {
 
     private ConcurrentHashMap<String, Session> sessions = new ConcurrentHashMap<>();
@@ -23,6 +24,5 @@ public class WebsocketConnectionPool {
     public Session getSession(String login) {
         return this.sessions.get(login);
     }
-
 }
 

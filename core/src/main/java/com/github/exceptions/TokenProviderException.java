@@ -1,6 +1,6 @@
 package com.github.exceptions;
 
-public class TokenProviderException extends RuntimeException{
+public class TokenProviderException extends RuntimeException {
 
     public TokenProviderException() {
     }

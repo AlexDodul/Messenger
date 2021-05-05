@@ -1,6 +1,6 @@
 package com.github.exceptions;
 
-public class UserInsertException extends RuntimeException{
+public class UserInsertException extends RuntimeException {
 
     public UserInsertException() {
     }

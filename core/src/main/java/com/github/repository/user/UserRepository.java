@@ -13,7 +13,7 @@ import com.github.micro.orm.exceptions.UpdateErrorException;
 import javax.sql.DataSource;
 import java.util.Collection;
 
-public class UserRepository implements IUserRepository{
+public class UserRepository implements IUserRepository {
 
     private CustomJdbcTemplate<User> customJdbcTemplate;
 
@@ -48,14 +48,14 @@ public class UserRepository implements IUserRepository{
                     UserRowMapper.getRowMapper(),
                     userAuthDto.getLogin()
             );
-            if(userAuthDto.getPassword().equals(result.getPassword())){
+            if (userAuthDto.getPassword().equals(result.getPassword())) {
                 return result;
             } else {
                 throw new WrongPasswordException("Wrong password for user " + userAuthDto.getLogin());
             }
         } catch (CustomSQLException e) {
             throw new DatabaseException(e.getMessage());
-        } catch (ElementNotFoundException e){
+        } catch (ElementNotFoundException e) {
             throw new WrongLoginException("Wrong login: " + userAuthDto.getLogin());
         }
     }
@@ -77,7 +77,7 @@ public class UserRepository implements IUserRepository{
             );
         } catch (CustomSQLException e) {
             throw new DatabaseException(e.getMessage());
-        } catch (ElementNotFoundException e){
+        } catch (ElementNotFoundException e) {
             throw new WrongLoginException(e.getMessage());
         }
     }
@@ -162,5 +162,4 @@ public class UserRepository implements IUserRepository{
             throw new UserDeleteException(e.getMessage());
         }
     }
-
 }
